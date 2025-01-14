@@ -1,13 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { useQueryClient } from '@tanstack/react-query';
 
 const Banner = () => {
-    const forumTags = ["Web Development", "Backend", "Microservices", "TailwindCSS", "Machine Learning"];
-
     const axiosPublic = useAxiosPublic()
     const [search, setSearch]= useState('')
+    const [tags, setTags]=useState([])
     const queryClient = useQueryClient();
+
+    useEffect(() => {
+        const fetchTags = async () => {
+          try {
+            // Make the request to fetch tags
+            const response = await axiosPublic.get('/tags');
+            // Log the response data
+            setTags(response.data.tags);
+          } catch (err) {
+            console.error('Error fetching tags:', err);
+          }
+        };
+    
+        fetchTags(); // Call the async function to fetch tags
+      }, []); 
+
 
     const handleSearchClick = (tag) => {
         setSearch(tag);
@@ -21,7 +36,7 @@ const Banner = () => {
         }
       
         try {
-          const res = await axiosPublic(`/search?query=${encodeURIComponent(search)}`);
+          const res = await axiosPublic.get(`/search?query=${encodeURIComponent(search)}`);
           const data = res.data;
       
           if (!data || data.length === 0) {
@@ -63,7 +78,7 @@ const Banner = () => {
                             </button>
             </div>
             <div className='text-center'>
-            {forumTags.map((forumTag,i)=><button onClick={() => handleSearchClick(forumTag)} className='btn mr-3' key={i} >#{forumTag}</button>)}
+            {tags.map((tag,i)=><button onClick={() => handleSearchClick(tag)} className='btn my-3 mx-2' key={i} >#{tag}</button>)}
             </div>
         </div>
     );
