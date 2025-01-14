@@ -1,33 +1,69 @@
-import React from 'react';
+import { useState } from 'react';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Banner = () => {
-    const forumTags = ["Web Development", "Programming", "Software", "Hardware", "AI & Machine Learning"];
+    const forumTags = ["Web Development", "Backend", "Microservices", "TailwindCSS", "Machine Learning"];
 
-    
+    const axiosPublic = useAxiosPublic()
+    const [search, setSearch]= useState('')
+    const queryClient = useQueryClient();
 
+    const handleSearchClick = (tag) => {
+        setSearch(tag);
+      };
+
+      console.log(search)
+    const handleSearch = async () => {
+        if (!search.trim()) {
+          alert("Type the topic");
+          return;
+        }
+      
+        try {
+          const res = await axiosPublic(`/search?query=${encodeURIComponent(search)}`);
+          const data = res.data;
+      
+          if (!data || data.length === 0) {
+            alert("No results found for your search.");
+          } else {
+            console.log("Search Results:", data);
+            queryClient.setQueryData(["posts"], data) 
+          }
+        } catch (error) {
+          console.error("Error fetching search results:", error);
+          alert("Failed to fetch search results. Please try again later.");
+        }
+      };
+      
     return (
         <div className='bg-orange-400 h-2/3 space-y-10'>
-            <h1 className='text-5xl text-center'>Announcements</h1>
             <h1 className='text-7xl text-center'>Welcome TO thread Hive</h1>
             <div className='flex items-center justify-center my-10'>
-            <label className="input input-bordered flex items-center w-1/2 gap-2">
-                            <input type="text" className="grow" placeholder="Search" />
-                            <button className='btn btn-success text-white'>
+            <label className="input input-bordered rounded-r-none flex items-center w-1/2">
+                            <input 
+                                                type="text"
+                                                placeholder="Search for Topics...."
+                                                aria-label="Search for Topics...."
+                                                value={search}
+                                                onChange={(e) => setSearch(e.target.value)}
+                                                className="grow"/>
+                            </label>
+                            <button onClick={handleSearch} className='btn btn-success text-white rounded-l-none'>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 16 16"
                                 fill="currentColor"
-                                className="h-4 w-4 opacity-70">
+                                className="h-4 w-4">
                                 <path
                                 fillRule="evenodd"
                                 d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
                                 clipRule="evenodd" />
                             </svg>
                             </button>
-                            </label>
             </div>
             <div className='text-center'>
-            {forumTags.map((forumTag,i)=><button className='btn mr-3' key={i}>#{forumTag}</button>)}
+            {forumTags.map((forumTag,i)=><button onClick={() => handleSearchClick(forumTag)} className='btn mr-3' key={i} >#{forumTag}</button>)}
             </div>
         </div>
     );
