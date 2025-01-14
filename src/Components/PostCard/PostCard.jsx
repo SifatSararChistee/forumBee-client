@@ -13,6 +13,21 @@ const PostCard = ({post}) => {
         DevOps: "bg-orange-100 text-orange-800",
         AI: "bg-orange-100 text-orange-800",
       };
+      const convertToActualTime = (isoDate) => {
+        const date = new Date(isoDate);
+        
+        // Custom formatting
+        return date.toLocaleString('en-US', {
+          weekday: 'long', // "Monday"
+          year: 'numeric', // "2025"
+          month: 'long', // "January"
+          day: 'numeric', // "9"
+          hour: 'numeric', // "4"
+          minute: 'numeric', // "20"
+          second: 'numeric', // "00"
+          hour12: true, // AM/PM
+        });
+      };
   return (
     <div className="w-full h-56">
       <div className="flex border border-gray-300 rounded-lg shadow-lg bg-white overflow-hidden h-full">
@@ -56,7 +71,7 @@ const PostCard = ({post}) => {
             />
             <div className="ml-2">
               <p className="text-sm font-semibold">{authorName}</p>
-              <p className="text-xs text-gray-500">{time}</p>
+              <p className="text-xs text-gray-500">{convertToActualTime(time)}</p>
             </div>
           </div>
           {/* Post Title */}

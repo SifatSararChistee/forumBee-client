@@ -1,27 +1,39 @@
-import axios from 'axios';
+import useAxiosPublic from '../../Hooks/useAxiosPublic'
 import React, { useEffect, useState } from 'react';
 import PostCard from '../PostCard/PostCard';
+import { useQuery } from '@tanstack/react-query';
+
 
 const AllPosts = () => {
         const [posts, setPosts] = useState([]);
         const [loading, setLoading] = useState(true);
-      
+        const axiosPublic =useAxiosPublic()
+
+        const { data: postdata = [], refetch, isLoading } = useQuery({
+          queryKey: ['posts'],
+          queryFn: async () => {
+            const res = await axiosPublic('/posts');
+            return res.data;
+          },
+          onSuccess: () => {
+            setLoading(false); // Set loading to false when data is successfully fetched
+          },
+          onError: () => {
+            setLoading(false); // Set loading to false in case of an error
+          },
+        });
+        
+        console.log(postdata)
         useEffect(() => {
-          // Fetch data using axios
-          axios
-            .get("/fakeData.json")
-            .then((response) => {
-              setPosts(response.data);
-              setLoading(false);
-            })
-            .catch((error) => {
-              console.error("Error fetching data: ", error);
-              setLoading(false);
-            });
-        }, []);
-        console.log(posts)
+          if (postdata.length > 0) {
+            setPosts(postdata);
+            setLoading(false)
+          }
+        }, [postdata]); 
       
-        if (loading) return <div>Loading...</div>;
+        if (isLoading || loading) {
+          return <div>Loading...</div>; // Display a loading message or spinner
+        }
 
     return (
         <div>
