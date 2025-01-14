@@ -1,0 +1,103 @@
+[
+    {
+      "authorName": "Alice Smith",
+      "authorImg": "https://randomuser.me/api/portraits/women/1.jpg",
+      "postTitle": "How to Build a Modern Web App",
+      "tags": ["React", "Node.js", "Web Development"],
+      "time": "2025-01-12T08:15:00Z",
+      "comments": 45,
+      "upVotes": 234,
+      "downVotes": 12
+    },
+    {
+      "authorName": "Bob Johnson",
+      "authorImg": "https://randomuser.me/api/portraits/men/2.jpg",
+      "postTitle": "Mastering TailwindCSS in 2025",
+      "tags": ["TailwindCSS", "CSS", "Design"],
+      "time": "2025-01-10T14:45:00Z",
+      "comments": 25,
+      "upVotes": 321,
+      "downVotes": 8
+    },
+    {
+      "authorName": "Charlie Brown",
+      "authorImg": "https://randomuser.me/api/portraits/men/3.jpg",
+      "postTitle": "The Future of Artificial Intelligence",
+      "tags": ["AI", "Machine Learning", "Tech"],
+      "time": "2025-01-11T11:00:00Z",
+      "comments": 55,
+      "upVotes": 210,
+      "downVotes": 5
+    },
+    {
+      "authorName": "David Williams",
+      "authorImg": "https://randomuser.me/api/portraits/men/4.jpg",
+      "postTitle": "Best Practices for API Design",
+      "tags": ["API", "Backend", "Development"],
+      "time": "2025-01-13T09:30:00Z",
+      "comments": 12,
+      "upVotes": 180,
+      "downVotes": 3
+    },
+    {
+      "authorName": "Emma Davis",
+      "authorImg": "https://randomuser.me/api/portraits/women/5.jpg",
+      "postTitle": "Exploring Next.js for Server-Side Rendering",
+      "tags": ["Next.js", "React", "JavaScript"],
+      "time": "2025-01-09T16:20:00Z",
+      "comments": 35,
+      "upVotes": 275,
+      "downVotes": 15
+    },
+    {
+      "authorName": "Frank Miller",
+      "authorImg": "https://randomuser.me/api/portraits/men/6.jpg",
+      "postTitle": "A Guide to GraphQL and Apollo Client",
+      "tags": ["GraphQL", "Apollo", "Frontend"],
+      "time": "2025-01-08T12:10:00Z",
+      "comments": 18,
+      "upVotes": 157,
+      "downVotes": 7
+    },
+    {
+      "authorName": "Grace Lee",
+      "authorImg": "https://randomuser.me/api/portraits/women/7.jpg",
+      "postTitle": "Introduction to Microservices Architecture",
+      "tags": ["Microservices", "Architecture", "Cloud"],
+      "time": "2025-01-07T13:00:00Z",
+      "comments": 40,
+      "upVotes": 300,
+      "downVotes": 9
+    },
+    {
+      "authorName": "Henry Walker",
+      "authorImg": "https://randomuser.me/api/portraits/men/8.jpg",
+      "postTitle": "Web Security Best Practices",
+      "tags": ["Security", "Web Development", "DevOps"],
+      "time": "2025-01-06T15:00:00Z",
+      "comments": 62,
+      "upVotes": 180,
+      "downVotes": 6
+    },
+    {
+      "authorName": "Isabella Harris",
+      "authorImg": "https://randomuser.me/api/portraits/women/9.jpg",
+      "postTitle": "CSS Grid vs Flexbox: Which One to Use?",
+      "tags": ["CSS", "Web Design", "Frontend"],
+      "time": "2025-01-05T10:05:00Z",
+      "comments": 50,
+      "upVotes": 220,
+      "downVotes": 10
+    },
+    {
+      "authorName": "Jack Clark",
+      "authorImg": "https://randomuser.me/api/portraits/men/10.jpg",
+      "postTitle": "How to Integrate WebSockets with Node.js",
+      "tags": ["Node.js", "WebSockets", "Backend"],
+      "time": "2025-01-04T17:30:00Z",
+      "comments": 30,
+      "upVotes": 185,
+      "downVotes": 5
+    }
+  ]
+  
