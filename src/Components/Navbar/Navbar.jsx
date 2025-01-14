@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
+import { FiPlus } from 'react-icons/fi';
 
 const Navbar = () => {
   const {user, logOut, setUser, loading}=useAuth()
@@ -51,6 +52,11 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
+  {
+      loading ? '':  (
+        user && user.email ? <NavLink to={'/dashboard/addPost'}><button className='btn btn-success text-white text-xl font'><span className='text-xl'><FiPlus /></span>Post</button></NavLink> : ''
+
+     ) }
   <button className="btn btn-ghost btn-circle">
       <div className="indicator">
         <svg
