@@ -28,7 +28,6 @@ const Banner = () => {
         setSearch(tag);
       };
 
-      console.log(search)
     const handleSearch = async () => {
         if (!search.trim()) {
           alert("Type the topic");
