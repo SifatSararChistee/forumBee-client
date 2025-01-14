@@ -14,7 +14,7 @@ const PostCard = ({post}) => {
         AI: "bg-orange-100 text-orange-800",
       };
   return (
-    <div className="w-full h-48">
+    <div className="w-full h-56">
       <div className="flex border border-gray-300 rounded-lg shadow-lg bg-white overflow-hidden h-full">
         {/* Votes Section */}
         <div className="flex flex-col items-center justify-center bg-gray-100 p-3">

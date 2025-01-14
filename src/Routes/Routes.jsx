@@ -3,6 +3,8 @@ import Root from "../Layout/Root";
 import HomePage from "../Pages/Home/HomePage";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import Membership from "../Pages/Membership/Membership";
+import Register from "../Pages/Register/Register";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 
 
 const router = createBrowserRouter([
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
         {
             path: "/login",
             element: <LoginPage></LoginPage>,
+        },
+        {
+            path: "/register",
+            element:<Register></Register>,
+        },
+        {
+            path: "/dashboard",
+            element:<Dashboard></Dashboard>,
         },
       ]
     }
