@@ -2,6 +2,9 @@ import React from 'react';
 
 const Banner = () => {
     const forumTags = ["Web Development", "Programming", "Software", "Hardware", "AI & Machine Learning"];
+
+    
+
     return (
         <div className='bg-orange-400 h-2/3 space-y-10'>
             <h1 className='text-5xl text-center'>Announcements</h1>

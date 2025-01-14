@@ -1,39 +1,19 @@
-import useAxiosPublic from '../../Hooks/useAxiosPublic'
 import React, { useEffect, useState } from 'react';
 import PostCard from '../PostCard/PostCard';
-import { useQuery } from '@tanstack/react-query';
-
+import usePosts from '../../Hooks/usePosts';
 
 const AllPosts = () => {
+        const [postData, refetch, isLoading, isError, error]=usePosts()
         const [posts, setPosts] = useState([]);
-        const [loading, setLoading] = useState(true);
-        const axiosPublic =useAxiosPublic()
-
-        const { data: postdata = [], refetch, isLoading } = useQuery({
-          queryKey: ['posts'],
-          queryFn: async () => {
-            const res = await axiosPublic('/posts');
-            return res.data;
-          },
-          onSuccess: () => {
-            setLoading(false); // Set loading to false when data is successfully fetched
-          },
-          onError: () => {
-            setLoading(false); // Set loading to false in case of an error
-          },
-        });
-        
         useEffect(() => {
-          if (postdata.length > 0) {
-            setPosts(postdata);
-            setLoading(false)
+          if (postData.length > 0) {
+            setPosts(postData);
           }
-        }, [postdata]); 
-      
-        if (isLoading || loading) {
-          return <div>Loading...</div>; // Display a loading message or spinner
-        }
+        }, [postData]); 
 
+        if (isLoading) return <p className='text-3xl text-center'>Loading....</p>;
+        if (isError) return <p>Error loading posts: {error.message}</p>;
+      
     return (
         <div>
             <select className='mb-5'>
