@@ -1,7 +1,8 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const PostCard = ({post}) => {
-    const {authorName, authorImg, postTitle, tags, time, comments, upVotes, downVotes}=post
+    const {_id,authorName, authorImg, postTitle, tags, time, comments, upVotes, downVotes}=post
     const tagColors = {
         React: "bg-blue-100 text-blue-800",
         "Node.js": "bg-green-100 text-green-800",
@@ -76,7 +77,7 @@ const PostCard = ({post}) => {
           </div>
           {/* Post Title */}
           <h2 className="text-lg font-bold text-gray-800 hover:underline">
-            <a href="#">{postTitle}</a>
+            <NavLink to={`/posts/${_id}`}>{postTitle}</NavLink>
           </h2>
           {/* Tags */}
           <div className="flex flex-wrap mt-2 mb-4">

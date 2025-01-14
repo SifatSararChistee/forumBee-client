@@ -23,7 +23,6 @@ const AllPosts = () => {
           },
         });
         
-        console.log(postdata)
         useEffect(() => {
           if (postdata.length > 0) {
             setPosts(postdata);
@@ -37,8 +36,8 @@ const AllPosts = () => {
 
     return (
         <div>
-            <select>
-              <option value="">Sort</option>
+            <select className='mb-5'>
+              <option value="">Sort By Popularity</option>
               <option value="">Up Vote</option>
               <option value="">Down Vote</option>
             </select>
