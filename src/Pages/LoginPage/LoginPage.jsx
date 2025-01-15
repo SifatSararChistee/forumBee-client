@@ -3,10 +3,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext, useState } from "react";
 import toast from 'react-hot-toast';
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 
 const LoginPage = () => {
-
+    const axiosPublic =useAxiosPublic()
     const {logInUser,  setUser, logInWithGoogle, setLoading} =useContext(AuthContext)
     const [email, setEmail] = useState("");
     const location = useLocation()
@@ -35,8 +36,20 @@ const LoginPage = () => {
         const user = userCredential.user;
           setUser(user)
           setLoading(false)
+          const userInfo = {
+            name: user.displayName,
+            email: user.email,
+            admin:false,
+            badge: 'Bronze'
+        }           
+        axiosPublic.post('/users', userInfo)
+        .then(res =>{
+          if (res.data.insertedId) {
+            console.log('user added to the database')
+          }
           toast.success("Login Successful")
           navigate(location?.state ? location.state: "/")
+        })
       })
       .catch((err) => {
         setLoading(false)

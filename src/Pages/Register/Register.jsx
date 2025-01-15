@@ -4,12 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { getAuth } from 'firebase/auth';
 import useAuth from '../../Hooks/useAuth';
+import useAxiosPublic from '../../Hooks/useAxiosPublic'
 
 
 const Register = () => {
   const {createNewUser,  setUser,logInWithGoogle, setLoading, updateUserProfile} =useAuth()
   const navigate=useNavigate()
   const [error, setError] = useState("");
+  const axiosPublic=useAxiosPublic()
 
  const validatePassword = (password) => {
   if (password.length < 6) {
@@ -49,8 +51,20 @@ const Register = () => {
               const auth = getAuth();
               const updatedUser = auth.currentUser;
               setUser({ ...updatedUser });
-              toast.success("Account Registered Successfully")
-              navigate("/")
+              const userInfo = {
+                name: user.displayName,
+                email: user.email,
+                admin:false,
+                badge: 'Bronze'
+            }
+            axiosPublic.post('/users', userInfo)
+            .then(res =>{
+              if (res.data.insertedId) {
+                console.log('user added to the database')
+                toast.success("Account Registered Successfully")
+                navigate("/")
+              }
+            })
             })
             .catch((err)=>{
               toast.error(err.message)
@@ -69,8 +83,19 @@ const Register = () => {
     .then((userCredential) => {
       const user = userCredential.user;
         setUser(user)
-        toast.success("Registered Successfully")
-        navigate("/")
+        const userInfo = {
+          name: user.displayName,
+          email: user.email,
+          admin:false,
+          badge: 'Bronze'
+      }            
+      axiosPublic.post('/users', userInfo)
+      .then(res =>{
+        if (res.data.insertedId) {
+          toast.success("Account Registered Successfully")
+        }
+      })
+      navigate("/")
     })
     .catch((err) => {
       toast.error(err.code)
