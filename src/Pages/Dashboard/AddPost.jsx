@@ -1,107 +1,209 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Select from "react-select";
-
-const tagOptions = [
-  { value: "technology", label: "Technology" },
-  { value: "health", label: "Health" },
-  { value: "science", label: "Science" },
-  { value: "entertainment", label: "Entertainment" },
-];
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const AddPost = () => {
-  const { register, handleSubmit, setValue, reset } = useForm();
+  const axiosPublic=useAxiosPublic()
+  const {user} = useAuth()
+  const [postCount, setPostCount] = useState(0);
+  const [tags, setTags]=useState([])
+  const date = new Date();
+  const formattedDate = date.toISOString().split('T')[0];
+  const [formVisible, setFormVisible] = useState(true);
+    const [formData, setFormData] = useState({
+    authorName: user?.displayName,
+    authorImage: user?.photoURL,
+    postTitle: "",
+    tags: [],
+    time:formattedDate,
+    comments:0,
+    authorEmail: user?.email,
+    upVote: 0,
+    downVote: 0,
+    description: "",
+  });
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    const postData = {
-      ...data,
-      tag: data.tag?.value || null, // Handle tag selection
-      upVote: 0,
-      downVote: 0,
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        // Make the request to fetch tags
+        const response = await axiosPublic.get('/tags');
+        const formattedTags = response.data[0].tags.map(tag => ({ value: tag, label: tag }));
+        setTags(formattedTags);
+      } catch (err) {
+        console.error('Error fetching tags:', err);
+      }
     };
-    console.log(postData);
-    reset(); // Reset form after submission
+
+    fetchTags(); // Call the async function to fetch tags
+  }, []); 
+
+  const handleTagChange = (selectedOptions) => {
+    const selectedTags = selectedOptions ? selectedOptions.map(option => option.value) : [];
+    setFormData({ ...formData, tags: selectedTags });
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value.trim() });
+  };
+
+
+  // useEffect(() => {
+  //   // Fetch post count from API
+  //   axios
+  //     .get("/api/user/posts/count") // Replace with your API endpoint
+  //     .then((response) => {
+  //       setPostCount(response.data.count);
+  //       setFormVisible(response.data.count < 5);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching post count:", error);
+  //     });
+  // }, []);
+
+
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Post data to API
+    console.log(formData)
+    axiosPublic
+      .post("/add-post", formData)
+      .then((response) => {
+        if(response.data.insertedId){
+          toast.success("Post added successfully!");
+        }
+        setPostCount(postCount + 1);
+        if (postCount + 1 >= 5) {
+          setFormVisible(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding post:", error);
+      });
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-center">Add a New Post</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Author Image */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Author Image</label>
-          <input
-            type="text"
-            {...register("authorImage", { required: true })}
-            placeholder="Enter image URL"
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        {/* Author Name */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Author Name</label>
-          <input
-            type="text"
-            {...register("authorName", { required: true })}
-            placeholder="Enter author name"
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        {/* Author Email */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Author Email</label>
-          <input
-            type="email"
-            {...register("authorEmail", { required: true })}
-            placeholder="Enter author email"
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        {/* Post Title */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Post Title</label>
-          <input
-            type="text"
-            {...register("postTitle", { required: true })}
-            placeholder="Enter post title"
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        {/* Post Description */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Post Description</label>
-          <textarea
-            {...register("postDescription", { required: true })}
-            placeholder="Enter post description"
-            className="textarea textarea-bordered w-full"
-          ></textarea>
-        </div>
-
-        {/* Tag */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Tag</label>
-          <div className="w-full">
-            <Select
-              options={tagOptions}
-              onChange={(option) => setValue("tag", option)}
-              placeholder="Select a tag"
-              className="react-select-container"
-              classNamePrefix="react-select"
-            />
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
+        {formVisible ? (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <h2 className="text-2xl font-bold text-center text-gray-800">
+              Add a Post
+            </h2>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Author Image</span>
+              </label>
+              <input
+              disabled
+                type="text"
+                name="authorImage"
+                value={formData.authorImage}
+                onChange={handleInputChange}
+                className="input input-bordered w-full"
+                placeholder="Enter image URL"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Author Name</span>
+              </label>
+              <input
+              disabled
+                type="text"
+                name="authorName"
+                value={formData.authorName}
+                onChange={handleInputChange}
+                className="input input-bordered w-full"
+                placeholder="Enter author name"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Author Email</span>
+              </label>
+              <input
+              disabled
+                type="email"
+                name="authorEmail"
+                value={formData.authorEmail}
+                onChange={handleInputChange}
+                className="input input-bordered w-full"
+                placeholder="Enter author email"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Post Title</span>
+              </label>
+              <input
+                type="text"
+                name="postTitle"
+                value={formData.postTitle}
+                onChange={handleInputChange}
+                className="input input-bordered w-full"
+                placeholder="Enter post title"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Post Description</span>
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                className="textarea textarea-bordered w-full"
+                placeholder="Enter post description"
+                required
+              ></textarea>
+            </div>
+            <div className="form-control">
+        <label className="label">
+          <span className="label-text">Tags</span>
+        </label>
+        <Select
+          options={tags}
+          onChange={handleTagChange}
+          placeholder="Select tags"
+          className="react-select-container"
+          classNamePrefix="react-select"
+          isMulti  // Allow multiple selections
+        />
+      </div>
+            <button type="submit" className="btn btn-primary w-full">
+              Add Post
+            </button>
+          </form>
+        ) : (
+          <div className="text-center">
+            <p className="text-lg text-gray-700">
+              You have reached the maximum post limit.
+            </p>
+            <p className="text-sm text-gray-500 mb-4">
+              Become a member to add more posts.
+            </p>
+            <button
+              onClick={() => navigate("/membership")}
+              className="btn btn-accent"
+            >
+              Become a Member
+            </button>
           </div>
-        </div>
-
-        {/* Submit Button */}
-        <div className="flex justify-center">
-          <button type="submit" className="btn btn-primary w-full">
-            Submit
-          </button>
-        </div>
-      </form>
+        )}
+      </div>
     </div>
   );
 };

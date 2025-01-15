@@ -87,6 +87,7 @@ const PostCard = ({post}) => {
               className="w-10 h-10 rounded-full"
               src={authorImg}
               alt="Author"
+              referrerPolicy="no-referrer"
             />
             <div className="ml-2">
               <p className="text-sm font-semibold">{authorName}</p>
@@ -99,7 +100,7 @@ const PostCard = ({post}) => {
           </h2>
           {/* Tags */}
           <div className="flex flex-wrap mt-2 mb-4">
-          {tags.map((tag, idx) => (
+          {tags?.map((tag, idx) => (
               <span
                 key={idx}
                 className={`text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ${tagColors[tag] || "bg-gray-100 text-gray-800"}`}

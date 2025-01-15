@@ -13,8 +13,7 @@ const Banner = () => {
           try {
             // Make the request to fetch tags
             const response = await axiosPublic.get('/tags');
-            // Log the response data
-            setTags(response.data.tags);
+            setTags(response.data[0].tags);
           } catch (err) {
             console.error('Error fetching tags:', err);
           }
@@ -22,7 +21,6 @@ const Banner = () => {
     
         fetchTags(); // Call the async function to fetch tags
       }, []); 
-
 
     const handleSearchClick = (tag) => {
         setSearch(tag);
@@ -77,7 +75,7 @@ const Banner = () => {
                             </button>
             </div>
             <div className='text-center'>
-            {tags.map((tag,i)=><button onClick={() => handleSearchClick(tag)} className='btn my-3 mx-2' key={i} >#{tag}</button>)}
+            {tags?.map((tag,i)=><button onClick={() => handleSearchClick(tag)} className='btn my-3 mx-2' key={i} >#{tag}</button>)}
             </div>
         </div>
     );
