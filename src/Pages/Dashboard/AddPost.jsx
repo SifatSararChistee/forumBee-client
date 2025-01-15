@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
@@ -9,7 +8,6 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 const AddPost = () => {
   const axiosPublic=useAxiosPublic()
   const {user} = useAuth()
-  const [postCount, setPostCount] = useState(0);
   const [tags, setTags]=useState([])
   const date = new Date();
   const formattedDate = date.toISOString().split('T')[0];
@@ -28,6 +26,23 @@ const AddPost = () => {
   });
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+    // Fetch post count from API
+    axiosPublic
+      .get(`/user-posts/${user.email}`) // Replace with your API endpoint
+      .then((response) => {
+          console.log(response.data.length )
+          if(response.data.length >= 5){
+            setFormVisible(false)
+          }
+        // setPostCount(response.data.count);
+        // setFormVisible(response.data.count < 5);
+      })
+      .catch((error) => {
+        console.error("Error fetching post count:", error);
+      });
+  }, []);
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -54,20 +69,6 @@ const AddPost = () => {
   };
 
 
-  // useEffect(() => {
-  //   // Fetch post count from API
-  //   axios
-  //     .get("/api/user/posts/count") // Replace with your API endpoint
-  //     .then((response) => {
-  //       setPostCount(response.data.count);
-  //       setFormVisible(response.data.count < 5);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching post count:", error);
-  //     });
-  // }, []);
-
-
 
 
   const handleSubmit = (e) => {
@@ -79,10 +80,7 @@ const AddPost = () => {
       .then((response) => {
         if(response.data.insertedId){
           toast.success("Post added successfully!");
-        }
-        setPostCount(postCount + 1);
-        if (postCount + 1 >= 5) {
-          setFormVisible(false);
+          navigate('/')
         }
       })
       .catch((error) => {
