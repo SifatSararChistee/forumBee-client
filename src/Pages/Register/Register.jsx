@@ -54,6 +54,7 @@ const Register = () => {
               const userInfo = {
                 name: user.displayName,
                 email: user.email,
+                photoURL: user.photoURL,
                 admin:false,
                 badge: 'Bronze'
             }
@@ -86,6 +87,7 @@ const Register = () => {
         const userInfo = {
           name: user.displayName,
           email: user.email,
+          photoURL: user.photoURL,
           admin:false,
           badge: 'Bronze'
       }            

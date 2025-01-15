@@ -39,6 +39,7 @@ const LoginPage = () => {
           const userInfo = {
             name: user.displayName,
             email: user.email,
+            photoURL: user.photoURL,
             admin:false,
             badge: 'Bronze'
         }           

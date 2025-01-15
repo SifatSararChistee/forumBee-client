@@ -9,6 +9,8 @@ import PostDetailsPage from "../Pages/PostDetailsPage/PostDetailsPage";
 import AddPost from "../Pages/Dashboard/AddPost";
 import MyProfile from "../Pages/Dashboard/MyProfile";
 import MyPosts from "../Pages/Dashboard/MyPosts";
+import CommentsPage from "../Pages/Dashboard/commentsPage";
+
 
 
 const router = createBrowserRouter([
@@ -55,6 +57,10 @@ const router = createBrowserRouter([
             path: "/posts/:id",
             element:<PostDetailsPage></PostDetailsPage>,
             loader: ({params})=>fetch(`http://localhost:5000/posts/${params.id}`)
+        },
+        {
+            path: "/comments/:postId",
+            element:<CommentsPage></CommentsPage>,
         },
       ]
     }
