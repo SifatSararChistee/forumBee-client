@@ -2,52 +2,88 @@ import React, { useEffect, useState } from 'react';
 import { FaRegThumbsDown, FaRegThumbsUp, FaShareAlt } from 'react-icons/fa';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import {FacebookShareCount, FacebookIcon, FacebookShareButton, TwitterShareButton, XIcon, WhatsappShareButton, WhatsappIcon} from "react-share";
+import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
 
 const PostDetailsPage = () => {
     const postData= useLoaderData()
     const navigate =useNavigate()
     const {user}= useAuth()
-    const {_id,authorName, authorImg, postTitle, tags, time, comments, upVotes, downVotes,description}=postData
-
-    // const [upVotes, setUpVotes] = useState(upVotes);
-    // const [downVotes, setDownVotes] = useState(downVotes);
+    const {_id:postId,authorName, authorImg, postTitle, tags, time, comments, upVotes, downVotes,description}=postData
+    const commentDate = new Date().toLocaleDateString(); 
     const [newComment, setNewComment] = useState('');
-    // const history = useHistory(); // To redirect users to login
+    const [upVotesCount, setUpVotesCount] = useState(upVotes);
+    const [downVotesCount, setDownVotesCount] = useState(downVotes);
+    const axiosPublic =useAxiosPublic()
+    // console.log(postId)
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    //load the comments
+    const { data, refetch } = useQuery({
+      queryKey: ["comments"],
+      queryFn: async () => {
+        const res = await axiosPublic.get(`/comments/${postId}`);
+      return(res.data)
+      },
+    });
+
+      // Handle comment submission
+      const handleCommentSubmit = async(e) => {
+        e.preventDefault();
+        if (!user) {
+          navigate('/login');
+          return;
+      }
+  
+
+      const comment = {
+        text: newComment,
+        date: commentDate,
+        postId: postId, 
+        userName: user?.displayName,
+        email: user?.email,
+        photoURL: user?.photoURL,
+    };
+
+    // console.log(comment)
+    try {
+      const response = await axiosPublic.post('/comments', comment);
+      // console.log(response.data)
+      if(response.data.insertedId){
+        toast.success('Comment submitted successfully!');
+      }
+      setNewComment('');
+      refetch()
+  } catch (error) {
+      console.error('Error submitting comment:', error.response?.data || error.message);
+      toast.error('Failed to submit the comment. Please try again.');
+  }
+      };
 
     const handleUpvote = () => {
-    //   if (!isLoggedIn) return alert('You need to log in to vote!');
-    //   setUpVotes(upVotes + 1);
+      if (!user) return toast.error('You need to log in to vote!');
+      setUpVotesCount(upVotes + 1);
     };
   
 
     const handleDownvote = () => {
-    //   if (!isLoggedIn) return alert('You need to log in to vote!');
-    //   setDownVotes(downVotes + 1);
+      if (!user) return toast.error('You need to log in to vote!');
+      setDownVotesCount(downVotes + 1);
     };
   
     const handleShare = () => {
       alert('Post shared!');
-      // You can implement sharing functionality here, such as sharing to social media or copying the link
     };
   
-    // Handle comment submission
-    const handleCommentSubmit = () => {
-      if (!user) {
-        navigate('/login')
-        return;
-      }
-      if (newComment.trim()) {
-        alert('Comment submitted!');
-        // In a real app, you would send the new comment to your backend
-      } else {
-        alert('Please write a comment before submitting.');
-      }
-    };
-  
-
     return (
         <div className="max-w-4xl mx-auto p-6 space-y-6">
+
         {/* Post Details */}
         <div className="bg-white p-6 rounded-lg shadow-md space-y-4">
           {/* Author Section */}
@@ -89,58 +125,88 @@ const PostDetailsPage = () => {
             >
               <FaRegThumbsUp size={24} />
             </button>
-            <span>{upVotes}</span>
+            <span>{upVotesCount}</span>
             <button
               onClick={handleDownvote}
               className="text-red-500 hover:text-red-600"
             >
               <FaRegThumbsDown size={24} />
             </button>
-            <span>{downVotes}</span>
+            <span>{downVotesCount}</span>
           </div>
   
           {/* Share Button */}
-          <div className='flex items-center gap-5'>
-          <div >
-        <TwitterShareButton
-          url={`http://localhost:5173/posts/${_id}`}
-          title={postTitle}
+<div>
+      {/* Trigger Button */}
+      <button
+      disabled={!user}
+        onClick={openModal}
+        className={`px-4 py-2 text-white rounded-full
+          ${user ? "bg-blue-500 hover:bg-blue-600":"bg-gray-400 cursor-not-allowed"}
+          `}
         >
-          <XIcon size={32} round />
-        </TwitterShareButton>
-      </div>
-      <div>
-        <FacebookShareButton
-          url={`http://localhost:5173/posts/${_id}`}
-        >
-          <FacebookIcon size={32} round />
-        </FacebookShareButton>
+          <FaShareAlt className="inline mr-2" />
+          Share
+        </button>
 
-        <div>
-          <FacebookShareCount
-            url={`http://localhost:5173/posts/${_id}`}
-          >
-            {(count) => count}
-          </FacebookShareCount>
-        </div>
-      </div>
-      <div >
-        <WhatsappShareButton
-          url={`http://localhost:5173/posts/${_id}`}
-          title={postTitle}
-          separator=":: "
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={closeModal} // Close modal when clicking outside
         >
-          <WhatsappIcon size={32} round />
-        </WhatsappShareButton>
-      </div>
-          <button
-            onClick={handleShare}
-            className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
+          <div
+            className="bg-white p-5 rounded shadow-lg w-96"
+            onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking inside
           >
-            <FaShareAlt className="inline mr-2" />
-            Share
-          </button>
+            {/* Modal Content */}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">Share this post</h2>
+              <button
+                onClick={closeModal}
+                className="text-gray-600 hover:text-gray-900"
+              >
+                ✖
+              </button>
+            </div>
+            <div className="flex items-center gap-5">
+              <div>
+                <TwitterShareButton
+                  url={`http://localhost:5173/posts/${postId}`}
+                  title={postTitle}
+                >
+                  <XIcon size={32} round />
+                </TwitterShareButton>
+              </div>
+              <div>
+                <FacebookShareButton
+                  url={`http://localhost:5173/posts/${postId}`}
+                >
+                  <FacebookIcon size={32} round />
+                </FacebookShareButton>
+                <div>
+                  <FacebookShareCount
+                    url={`http://localhost:5173/posts/${postId}`}
+                  >
+                    {(count) => count}
+                  </FacebookShareCount>
+                </div>
+              </div>
+              <div>
+                <WhatsappShareButton
+                  url={`http://localhost:5173/posts/${postId}`}
+                  title={postTitle}
+                  separator=":: "
+                >
+                  <WhatsappIcon size={32} round />
+                </WhatsappShareButton>
+              </div>
+            </div>
+          </div>
         </div>
+      )}
+    </div>
+
           </div>
          
   
@@ -157,8 +223,11 @@ const PostDetailsPage = () => {
                 className="w-full p-4 border rounded-lg"
               />
             <button
+                disabled={!newComment}
                 onClick={handleCommentSubmit}
-                className="mt-2 px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600"
+                className={`mt-2 px-4 py-2 text-white rounded-full ${
+                  newComment ? "bg-green-500 hover:bg-green-600" : "bg-gray-400 cursor-not-allowed"
+                }`}
               >
                 Comment
               </button>
@@ -166,21 +235,28 @@ const PostDetailsPage = () => {
           </div>
   
           {/* Comment List */}
-          {/* <div className="space-y-4 mt-6">
-            {comments.map((comment, index) => (
-              <div key={index} className="flex space-x-4">
-                <img
-                  src="https://via.placeholder.com/30"
-                  alt="User"
-                  className="w-8 h-8 rounded-full"
-                />
-                <div>
-                  <p className="font-semibold">{comment.author}</p>
-                  <p className="text-sm text-gray-600">{comment.text}</p>
-                </div>
-              </div>
-            ))}
-          </div> */}
+          <div className="space-y-4 mt-6">
+          {data && data.length > 0 ? (
+  data.map((comment, index) => (
+    <div key={index} className="flex space-x-4 items-center">
+      <img
+      referrerPolicy="no-referrer"
+        src={comment.photoURL}
+        alt={comment.userName}
+        className="w-10 h-10 rounded-full"
+      />
+      <div>
+        <p className="font-bold">{comment.userName}</p>
+        <p className="text-sm">{comment.date}</p>
+        <p className="text-lg text-gray-600">{comment.text}</p>
+      </div>
+    </div>
+  ))
+) : (
+  <p className="text-gray-500">No comments yet.</p>
+)}
+
+          </div>
         </div>
       </div>
     );

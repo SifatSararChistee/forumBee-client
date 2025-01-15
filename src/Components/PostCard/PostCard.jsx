@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const PostCard = ({post}) => {
     const {_id,authorName, authorImg, postTitle, tags, time, comments, upVotes, downVotes}=post
+    const {user}= useAuth()
+        const [upVotesCount, setUpVotesCount] = useState(upVotes);
+        // const [downVotesCount, setDownVotesCount] = useState(upVotes);
+      
+        const handleUpvote = () => {
+          if (!user) return alert('You need to log in to vote!');
+          setUpVotesCount(upVotes + 1);
+        };
+      
+    
+        const handleDownvote = () => {
+          if (!user) return alert('You need to log in to vote!');
+          setUpVotesCount(upVotes - 1);
+        };
+      
+
+
     const tagColors = {
         React: "bg-blue-100 text-blue-800",
         "Node.js": "bg-green-100 text-green-800",
@@ -34,7 +52,7 @@ const PostCard = ({post}) => {
       <div className="flex border border-gray-300 rounded-lg shadow-lg bg-white overflow-hidden h-full">
         {/* Votes Section */}
         <div className="flex flex-col items-center justify-center bg-gray-100 p-3">
-          <button className="text-gray-500 hover:text-red-500">
+          <button onClick={handleUpvote} className="text-gray-500 hover:text-red-500">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -46,8 +64,8 @@ const PostCard = ({post}) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7"></path>
             </svg>
           </button>
-          <span className="font-medium text-gray-700 my-1">{upVotes}</span>
-          <button className="text-gray-500 hover:text-blue-500">
+          <span className="font-medium text-gray-700 my-1">{upVotesCount}</span>
+          <button onClick={handleDownvote} className="text-gray-500 hover:text-blue-500">
             <svg
               className="w-6 h-6"
               fill="none"
