@@ -10,8 +10,12 @@ import AddPost from "../Pages/Dashboard/AddPost";
 import MyProfile from "../Pages/Dashboard/MyProfile";
 import MyPosts from "../Pages/Dashboard/MyPosts";
 import CommentsPage from "../Pages/Dashboard/commentsPage";
+import AdminProfile from "../Pages/Dashboard/Admin Dashboard/AdminProfile";
+import ManageUser from "../Pages/Dashboard/Admin Dashboard/ManageUser";
+import Announcement from "../Pages/Dashboard/Admin Dashboard/Announcement";
+import ReportedComments from "../Pages/Dashboard/Admin Dashboard/ReportedComments";
 
-
+const isAdmin =true;
 
 const router = createBrowserRouter([
     {
@@ -41,7 +45,7 @@ const router = createBrowserRouter([
             children:[
                 {
                     path: "/dashboard",
-                    element:<MyProfile></MyProfile>,
+                    element:isAdmin ? <AdminProfile /> : <MyProfile />,
                 },
                 {
                     path: "/dashboard/myPosts",
@@ -50,6 +54,22 @@ const router = createBrowserRouter([
                 {
                     path: "/dashboard/addPost",
                     element:<AddPost></AddPost>,
+                },
+                {
+                    path: "/dashboard/adminProfile",
+                    element:<AdminProfile></AdminProfile>,
+                },
+                {
+                    path: "/dashboard/manageUsers",
+                    element:<ManageUser></ManageUser>,
+                },
+                {
+                    path: "/dashboard/announcement",
+                    element:<Announcement></Announcement>,
+                },
+                {
+                    path: "/dashboard/reportedComments",
+                    element:<ReportedComments></ReportedComments>,
                 },
             ]
         },
