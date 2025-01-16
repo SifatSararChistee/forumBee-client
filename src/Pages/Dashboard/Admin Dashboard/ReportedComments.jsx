@@ -68,28 +68,22 @@ const ReportedComments = () => {
               <td>{report.reportReason}</td>
               <td>{new Date(report.reportedAt).toLocaleString()}</td>
               <td>{report.status}</td>
-              <td className="space-x-2">
+              <td className="space-y-2 text-center">
                 <button
                   onClick={() => handleAction(report.id, "remove")}
-                  className="btn btn-danger"
+                  className="btn btn-error text-white w-[150px]"
                 >
-                  Remove Comment
+                  Delete Comment
                 </button>
                 <button
                   onClick={() => handleAction(report.id, "ban")}
-                  className="btn btn-warning"
+                  className="btn btn-warning  w-[150px]"
                 >
-                  Ban User
-                </button>
-                <button
-                  onClick={() => handleAction(report.id, "warn")}
-                  className="btn btn-info"
-                >
-                  Warn User
+                  Approve Comment
                 </button>
                 <button
                   onClick={() => handleAction(report.id, "resolved")}
-                  className="btn btn-success"
+                  className="btn btn-success text-white  w-[150px]"
                 >
                   Mark as Resolved
                 </button>
