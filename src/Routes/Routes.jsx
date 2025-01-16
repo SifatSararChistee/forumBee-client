@@ -14,8 +14,8 @@ import AdminProfile from "../Pages/Dashboard/Admin Dashboard/AdminProfile";
 import ManageUser from "../Pages/Dashboard/Admin Dashboard/ManageUser";
 import Announcement from "../Pages/Dashboard/Admin Dashboard/Announcement";
 import ReportedComments from "../Pages/Dashboard/Admin Dashboard/ReportedComments";
-
-const isAdmin =true;
+import PrivateRoute from "../Routes/PrivateRoute"
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -40,12 +40,21 @@ const router = createBrowserRouter([
             element:<Register></Register>,
         },
         {
+            path: "/posts/:id",
+            element:<PostDetailsPage></PostDetailsPage>,
+            loader: ({params})=>fetch(`http://localhost:5000/posts/${params.id}`)
+        },
+        {
+            path: "/comments/:postId",
+            element:<CommentsPage></CommentsPage>,
+        },
+        {
             path: "/dashboard",
-            element:<Dashboard></Dashboard>,
+            element:<><PrivateRoute><Dashboard></Dashboard></PrivateRoute></>,
             children:[
                 {
-                    path: "/dashboard",
-                    element:isAdmin ? <AdminProfile /> : <MyProfile />,
+                    path: "/dashboard/userProfile",
+                    element:<MyProfile />,
                 },
                 {
                     path: "/dashboard/myPosts",
@@ -57,30 +66,21 @@ const router = createBrowserRouter([
                 },
                 {
                     path: "/dashboard/adminProfile",
-                    element:<AdminProfile></AdminProfile>,
+                    element:<><AdminRoute><AdminProfile></AdminProfile></AdminRoute></>,
                 },
                 {
                     path: "/dashboard/manageUsers",
-                    element:<ManageUser></ManageUser>,
+                    element:<><AdminRoute><ManageUser></ManageUser></AdminRoute></>,
                 },
                 {
                     path: "/dashboard/announcement",
-                    element:<Announcement></Announcement>,
+                    element:<><AdminRoute><Announcement></Announcement></AdminRoute></>,
                 },
                 {
                     path: "/dashboard/reportedComments",
-                    element:<ReportedComments></ReportedComments>,
+                    element:<><AdminRoute><ReportedComments></ReportedComments></AdminRoute></>,
                 },
             ]
-        },
-        {
-            path: "/posts/:id",
-            element:<PostDetailsPage></PostDetailsPage>,
-            loader: ({params})=>fetch(`http://localhost:5000/posts/${params.id}`)
-        },
-        {
-            path: "/comments/:postId",
-            element:<CommentsPage></CommentsPage>,
         },
       ]
     }
