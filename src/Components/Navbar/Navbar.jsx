@@ -3,10 +3,12 @@ import { NavLink } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import { FiPlus } from 'react-icons/fi';
 import useAnnouncement from '../../Hooks/useAnnouncement';
+import useAdmin from '../../Hooks/useAdmin';
 
 const Navbar = () => {
   const {user, logOut, setUser, loading}=useAuth()
   const [announcements]=useAnnouncement()
+  const [isAdmin]=useAdmin()
   const handleLogOut = () => {
     logOut();
     setUser(null);
@@ -56,7 +58,7 @@ const Navbar = () => {
   <div className="navbar-end">
   {
       loading ? '':  (
-        user && user.email ? <NavLink to={'/dashboard/addPost'}><button className='btn btn-success text-white text-xl font'><span className='text-xl'><FiPlus /></span>Post</button></NavLink> : ''
+        user && user.email ? <NavLink to={isAdmin ? '/dashboard/announcement':'/dashboard/addPost'}><button className='btn btn-success text-white text-xl font'><span className='text-xl'><FiPlus /></span>Post</button></NavLink> : ''
      ) }
   <button className="btn btn-ghost btn-circle">
       <div className="indicator">
@@ -94,7 +96,11 @@ const Navbar = () => {
               {user?.displayName}
             </p>
           </li>
-          <li><NavLink to={'/dashboard'}>DashBoard</NavLink></li>
+          <li>
+            <NavLink to={isAdmin ? '/dashboard/adminProfile' : '/dashboard/userProfile'}>
+              DashBoard
+            </NavLink>
+          </li>
           <li><button onClick={handleLogOut}>Logout</button></li>
         </ul>
       </div>: ''
