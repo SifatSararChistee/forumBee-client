@@ -1,9 +1,16 @@
 import React, { useState } from "react";
+import useAuth from "../../../Hooks/useAuth";
+import toast from "react-hot-toast";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAnnouncement from "../../../Hooks/useAnnouncement";
 
 const Announcement = () => {
+  const {user}=useAuth()
+  const axiosSecure=useAxiosSecure()
+  const [,refetch]=useAnnouncement()
   const [announcement, setAnnouncement] = useState({
-    authorImage: "",
-    authorName: "",
+    authorImage: user.photoURL,
+    authorName: user.displayName,
     title: "",
     description: ""
   });
@@ -19,7 +26,23 @@ const Announcement = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Announcement Submitted:", announcement);
-    // Here, you can handle the submission (e.g., save it to a database)
+    axiosSecure
+    .post("/announcements",  announcement)
+    .then((response) => {
+      if(response.data.insertedId){
+        toast.success("Published Announcement")
+        refetch()
+        setAnnouncement({
+          authorImage: user.photoURL,
+          authorName: user.displayName,
+          title: "",
+          description: ""
+        })
+      }
+    })
+    .catch((error) => {
+      console.error("Error adding post:", error);
+    });
   };
 
   return (
@@ -38,7 +61,7 @@ const Announcement = () => {
             />
             <label htmlFor="authorImageInput" className="cursor-pointer">
               {announcement.authorImage ? (
-                <img src={announcement.authorImage} alt="Author" className="w-full h-full object-cover rounded-full" />
+                <img referrerPolicy="no-referrer" src={announcement.authorImage} alt="Author" className="w-full h-full object-cover rounded-full" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-white bg-gray-600 rounded-full">+</div>
               )}
@@ -84,7 +107,7 @@ const Announcement = () => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary w-full">
+        <button type="submit" className="btn btn-success text-white w-full">
           Submit Announcement
         </button>
       </form>

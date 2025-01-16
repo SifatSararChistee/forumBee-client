@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 function debounce(func, delay) {
   let timeout;
@@ -47,6 +48,7 @@ const ManageUser = () => {
     try {
       const res = await axiosSecure.patch(`/users/admin/${_id}`);
       if (res.data.modifiedCount > 0) {
+        toast.success("User status updated to Admin")
         refetch(); 
       }
     } catch (error) {

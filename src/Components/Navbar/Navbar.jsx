@@ -2,9 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import { FiPlus } from 'react-icons/fi';
+import useAnnouncement from '../../Hooks/useAnnouncement';
 
 const Navbar = () => {
   const {user, logOut, setUser, loading}=useAuth()
+  const [announcements]=useAnnouncement()
   const handleLogOut = () => {
     logOut();
     setUser(null);
@@ -55,7 +57,6 @@ const Navbar = () => {
   {
       loading ? '':  (
         user && user.email ? <NavLink to={'/dashboard/addPost'}><button className='btn btn-success text-white text-xl font'><span className='text-xl'><FiPlus /></span>Post</button></NavLink> : ''
-
      ) }
   <button className="btn btn-ghost btn-circle">
       <div className="indicator">
@@ -71,7 +72,7 @@ const Navbar = () => {
             strokeWidth="2"
             d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
         </svg>
-        <span className="badge badge-xs badge-primary indicator-item"></span>
+        <span className="badge indicator-item">{announcements.length}</span>
       </div>
     </button>
     {
@@ -89,9 +90,8 @@ const Navbar = () => {
           tabIndex={0}
           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
           <li>
-            <p className="justify-between">
+            <p className="justify-between pointer-events-none">
               {user?.displayName}
-              <span className="badge">New</span>
             </p>
           </li>
           <li><NavLink to={'/dashboard'}>DashBoard</NavLink></li>
