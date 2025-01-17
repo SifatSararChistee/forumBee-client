@@ -1,50 +1,41 @@
 import React, { useState } from "react";
+import useAxiosSecure from '../../../Hooks/useAxiosSecure'
+import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const ReportedComments = () => {
-  const [reports, setReports] = useState([
-    {
-      id: 1,
-      user: "John Doe",
-      comment: "This is offensive content!",
-      reportReason: "Offensive Language",
-      status: "Pending",
-      reportedAt: "2025-01-15T14:32:00",
+  const axiosSecure= useAxiosSecure()
+  const { data: reports=[], refetch, isLoading, isError, error } = useQuery({
+    queryKey: ["reports"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/reports");
+      return res.data;
     },
-    {
-      id: 2,
-      user: "Jane Smith",
-      comment: "Check out my link here: spam.com",
-      reportReason: "Spam",
-      status: "Pending",
-      reportedAt: "2025-01-16T09:22:00",
-    },
-  ]);
+  });
 
-  const handleAction = (id, action) => {
-    // Update the report status and perform corresponding action
-    setReports(
-      reports.map((report) => {
-        if (report.id === id) {
-          return {
-            ...report,
-            status: action === "resolved" ? "Resolved" : "Action Taken",
-          };
-        }
-        return report;
-      })
-    );
-
-    if (action === "remove") {
-      // Perform remove action (e.g., delete comment from database)
-      console.log(`Comment with id ${id} has been removed.`);
-    } else if (action === "ban") {
-      // Perform user ban action
-      console.log(`User ${reports.find((r) => r.id === id).user} has been banned.`);
-    } else if (action === "warn") {
-      // Send a warning to the user
-      console.log(`User ${reports.find((r) => r.id === id).user} has been warned.`);
+  const handleStatusUpdate = async (_id, status) => {
+    // Make a PATCH request to update the report status
+      const res = await axiosSecure.patch(`/report/${_id}`, { status });
+      if (res.data.modifiedCount > 0) {
+        toast.success(`Comment ${status.charAt(0).toUpperCase() + status.slice(1)} Successfully`);
+        refetch();
+      }
     }
-  };
+    
+// Handle approve action
+const handleApprove = (_id) => {
+  handleStatusUpdate(_id, "approved");
+};
+
+// Handle resolved action
+const handleResolved = (_id) => {
+  handleStatusUpdate(_id, "action taken");
+};
+
+// Example usage for delete
+const handleDelete = (_id) => {
+  handleStatusUpdate(_id, "deleted");
+};
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
@@ -55,34 +46,32 @@ const ReportedComments = () => {
             <th>User</th>
             <th>Comment</th>
             <th>Reason</th>
-            <th>Reported At</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {reports.map((report) => (
-            <tr key={report.id}>
-              <td>{report.user}</td>
-              <td>{report.comment}</td>
-              <td>{report.reportReason}</td>
-              <td>{new Date(report.reportedAt).toLocaleString()}</td>
+            <tr key={report._id}>
+              <td>{report.userName}</td>
+              <td>{report.commentText}</td>
+              <td>{report.feedback}</td>
               <td>{report.status}</td>
               <td className="space-y-2 text-center">
                 <button
-                  onClick={() => handleAction(report.id, "remove")}
+                  onClick={() => handleDelete(report._id)}
                   className="btn btn-error text-white w-[150px]"
                 >
                   Delete Comment
                 </button>
                 <button
-                  onClick={() => handleAction(report.id, "ban")}
+                  onClick={() => handleApprove(report._id)}
                   className="btn btn-warning  w-[150px]"
                 >
                   Approve Comment
                 </button>
                 <button
-                  onClick={() => handleAction(report.id, "resolved")}
+                  onClick={() => handleResolved(report._id)}
                   className="btn btn-success text-white  w-[150px]"
                 >
                   Mark as Resolved

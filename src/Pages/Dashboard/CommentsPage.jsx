@@ -51,6 +51,7 @@ const CommentsPage = () => {
       userName: userName || "Anonymous", // Default to "Anonymous" if userName is not provided
       commentText: text,
       feedback: feedbackMap[_id],
+      status:'pending',
     };
   
     // Add the report details to the reportData array
