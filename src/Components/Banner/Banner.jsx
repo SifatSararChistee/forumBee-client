@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
-import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { PostsContext } from '../../Provider/PostProvider';
+
 
 const Banner = () => {
     const axiosPublic = useAxiosPublic()
     const [search, setSearch]= useState('')
     const [tags, setTags]=useState([])
-    const queryClient = useQueryClient();
+    const {posts , setPosts}= useContext(PostsContext)
 
     useEffect(() => {
         const fetchTags = async () => {
@@ -37,10 +39,10 @@ const Banner = () => {
           const data = res.data;
       
           if (!data || data.length === 0) {
-            alert("No results found for your search.");
+            toast.error("No results found for your search.");
           } else {
             console.log("Search Results:", data);
-            queryClient.setQueryData(["posts"], data) 
+            setPosts(data) 
           }
         } catch (error) {
           console.error("Error fetching search results:", error);

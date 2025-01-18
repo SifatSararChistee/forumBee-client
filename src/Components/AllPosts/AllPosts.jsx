@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PostCard from '../PostCard/PostCard';
 import usePosts from '../../Hooks/usePosts';
-import { useQueryClient } from '@tanstack/react-query';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import { PostsContext } from '../../Provider/PostProvider';
 
 const AllPosts = () => {
         const [postData, refetch, isLoading, isError, error]=usePosts()
-        const [posts, setPosts] = useState([]);
+        const {posts , setPosts} = useContext(PostsContext)
         const axiosPublic = useAxiosPublic()
         const [currentPage, setCurrentPage]=useState(0)
 
