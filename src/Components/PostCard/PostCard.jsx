@@ -4,7 +4,7 @@ import useAuth from "../../Hooks/useAuth";
 
 const PostCard = ({post}) => {
     const {_id,authorName, authorImg, postTitle, tags, time, comments, upVotes, downVotes}=post
-    console.log(authorImg)
+    // console.log(authorImg)
     const {user}= useAuth()
         const [upVotesCount, setUpVotesCount] = useState(upVotes);
         // const [downVotesCount, setDownVotesCount] = useState(upVotes);

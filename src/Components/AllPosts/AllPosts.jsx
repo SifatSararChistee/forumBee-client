@@ -7,23 +7,32 @@ import useAxiosPublic from '../../Hooks/useAxiosPublic';
 const AllPosts = () => {
         const [postData, refetch, isLoading, isError, error]=usePosts()
         const [posts, setPosts] = useState([]);
-        const queryClient = useQueryClient();
         const axiosPublic = useAxiosPublic()
+        const [currentPage, setCurrentPage]=useState(0)
 
-        useEffect(() => {
-          if (postData.length > 0) {
-            setPosts(postData);
+        const itemsPerPage = 5;
+      const count = postData.length
+      const numberOfPages= Math.ceil(count/itemsPerPage)
+      const pages = [...Array (numberOfPages).keys()];
+      useEffect(() => {
+        const fetchPosts = async () => {
+          try {
+            const response = await axiosPublic.get(`/posts?page=${currentPage}&limit=${itemsPerPage}`);
+            setPosts(response.data); 
+          } catch (error) {
+            console.error("Error fetching posts:", error);
           }
-        }, [postData]); 
+        };
+      
+        fetchPosts(); 
+      
+      }, [currentPage, itemsPerPage]);
 
-        if (isLoading) return <p className='text-3xl text-center'>Loading....</p>;
-        if (isError) return <p>Error loading posts: {error.message}</p>;
-
+      
         const handleSortBtn =async()=>{
-          const res = await axiosPublic.get(`/sorted`);
+          const res = await axiosPublic.get(`/sorted?page=${currentPage}&limit=${itemsPerPage}`);
           const data = res.data;
-          console.log(data)
-          queryClient.setQueryData(["posts"], data)
+          setPosts(data)
         }
       
     return (
@@ -37,10 +46,15 @@ const AllPosts = () => {
             }
         </div>
         <div className="join my-5">
-            <button className="join-item btn">1</button>
+          {
+            pages.map(page =><button key={page} 
+              className={`btn join-item ${currentPage === page ? 'btn-active' : ''}`}
+              onClick={()=> setCurrentPage(page)}>{page}</button>)
+          }
+            {/* <button className="join-item btn">1</button>
             <button className="join-item btn btn-active">2</button>
             <button className="join-item btn">3</button>
-            <button className="join-item btn">4</button>
+            <button className="join-item btn">4</button> */}
         </div>
         </div>
 
