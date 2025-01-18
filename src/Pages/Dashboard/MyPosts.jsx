@@ -2,27 +2,33 @@ import React, { useEffect, useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import { NavLink } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const MyPosts = () => {
     const axiosPublic=useAxiosPublic()
     const {user} =useAuth()
-    const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    // Fetch posts from server
-    axiosPublic
-      .get(`/user-posts/${user?.email}`) 
-      .then((res) => {
-        setPosts(res.data)
-      })
-      .catch((error) => {
-        console.error("Error fetching post count:", error);
-      });
-  }, []);
+    const { data: posts=[], refetch, isLoading, isError, error } = useQuery({
+      queryKey: ["userPosts"],
+      queryFn: async () => {
+        const res = await axiosPublic.get(`/user-posts/${user?.email}`);
+        return res.data;
+      },
+    });
 
   const handleDelete = (id) => {
-    const filteredPosts = posts.filter((post) => post.id !== id);
-    setPosts(filteredPosts);
+    console.log(id)
+    axiosPublic
+        .delete(`/user-posts/${id}`) 
+        .then((res) => {
+          if(res.data.deletedCount){
+            toast.success("Post Deleted Successfully")
+            refetch()
+          }
+        })
+        .catch((error) => {
+          console.error("Error deleting post:", error);
+        });
   };
 
   return (
