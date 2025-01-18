@@ -2,22 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
+import useSingleUser from '../../Hooks/useSingleUser';
 
 const MyProfile = () => {
   const { user } = useAuth(); // Get the authenticated user
   const [posts, setPosts] = useState([]); // Initialize posts state
   const axiosPublic = useAxiosPublic();
-
-  // Fetch user data
-  const { data: userData, isLoading: userLoading, isError: userError, error: userErrorMsg } = useQuery({
-    queryKey: ["user", user?.email],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/user/${user?.email}`);
-      // console.log(res.data); 
-      return res.data[0]; 
-    },
-    enabled: !!user?.email, // Only run the query if user email exists
-  });
+  const [userData, userLoading, userError, userErrorMsg] = useSingleUser()
 
   // Fetch user posts data
   const { data: postsData, isLoading: postsLoading, isError: postsError, error: postsErrorMsg } = useQuery({

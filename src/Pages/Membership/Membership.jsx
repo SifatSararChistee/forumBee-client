@@ -1,21 +1,23 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import useAxiosSecure from '../../Hooks/useAxiosSecure'
+import useAuth from "../../Hooks/useAuth";
 
 const Membership = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const {user} = useAuth()
+  const axiosSecure= useAxiosSecure()
   const paymentAmount = 50; // Payment amount
 
   const handlePayment = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.post("/membership/upgrade", { amount: paymentAmount });
-
-      if (response.data.success) {
+      const response = await axiosSecure.patch(`/users/badge/${user?.email}`);
+      if (response.data.modifiedCount) {
         toast.success("Membership upgraded successfully!");
-        navigate("/dashboard");
+        navigate("/dashboard/userProfile");
       } else {
         toast.error("Payment failed. Please try again.");
       }

@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useSingleUser from '../../Hooks/useSingleUser'
 
 const AddPost = () => {
   const axiosPublic=useAxiosPublic()
   const {user} = useAuth()
+  const [userData] =useSingleUser()
+  console.log(userData?.badge)
   const [tags, setTags]=useState([])
   const date = new Date();
   const formattedDate = date.toISOString().split('T')[0];
@@ -26,19 +29,20 @@ const AddPost = () => {
   });
   const navigate = useNavigate();
 
-
   useEffect(() => {
     // Fetch post count from API
     axiosPublic
-      .get(`/user-posts/${user?.email}`) // Replace with your API endpoint
-      .then((response) => {
-          if(response.data.length >= 5){
-            setFormVisible(false)
-          }
-      })
-      .catch((error) => {
-        console.error("Error fetching post count:", error);
-      });
+    .get(`/user-posts/${user?.email}`)
+    .then((response) => {
+      if (response.data.length >= 5 && userData.badge === "Bronze") {
+        setFormVisible(false);
+      } else if (userData.badge === "Gold") {
+        setFormVisible(true);
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching post count:", error);
+    });
   }, []);
 
   useEffect(() => {
