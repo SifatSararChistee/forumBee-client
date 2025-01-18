@@ -16,6 +16,7 @@ const Announcements = () => {
               src={item.authorImage}
               alt={item.authorName}
               className="w-10 h-10 rounded-full"
+              referrerPolicy="no-referrer"
             />
             <div>
               <p className="text-blue-800 font-bold">{item.title}</p>
