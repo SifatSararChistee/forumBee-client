@@ -5,7 +5,7 @@ import useAnnouncement from "../../Hooks/useAnnouncement";
 const Announcements = () => {
     const [announcements]=useAnnouncement()
   return (
-    <div className="w-full bg-blue-100 py-4">
+    <div className="w-full max-w-screen-2xl mx-auto bg-white py-4">
       <Marquee gradient={false} speed={50}>
         {announcements.map((item) => (
           <div

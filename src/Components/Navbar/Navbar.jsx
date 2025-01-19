@@ -5,6 +5,7 @@ import { FiPlus } from 'react-icons/fi';
 import useAnnouncement from '../../Hooks/useAnnouncement';
 import useAdmin from '../../Hooks/useAdmin';
 import useSingleUser from '../../Hooks/useSingleUser';
+import logo from '../../assets/icons8-forumbee-100.png'
 
 const Navbar = () => {
   const {user, logOut, setUser, loading}=useAuth()
@@ -29,7 +30,7 @@ const Navbar = () => {
     }
     </>
     return (
-<div className="navbar bg-base-100">
+<div className="navbar max-w-screen-2xl mx-auto">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -52,7 +53,7 @@ const Navbar = () => {
         {links}
       </ul>
     </div>
-    <NavLink to={'/'}><button className="btn btn-ghost text-xl">logo + Thread Hive</button></NavLink>
+    <NavLink to={'/'}> <div className='flex items-center justify-center'><img className='w-12' src={logo}></img><span className="btn btn-ghost text-xl"> Forumbee</span></div></NavLink>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">

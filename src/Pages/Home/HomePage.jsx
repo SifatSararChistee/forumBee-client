@@ -7,8 +7,8 @@ import Announcements from '../../Components/Announcements/Announcements';
 const HomePage = () => {
     const[announcements]=useAnnouncement()
     return (
-        <div className='space-y-5'>
-            <section>
+        <div>
+            <section className='bg-green-200'>
             <Banner></Banner>
             </section>
             {
