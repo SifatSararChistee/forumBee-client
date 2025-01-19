@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const PostCard = ({post}) => {
     const {_id,authorName, authorImg, postTitle, tags, time, comments, upVotes, downVotes}=post
     const {user}= useAuth()
         const [upVotesCount, setUpVotesCount] = useState(upVotes);
-        // const [downVotesCount, setDownVotesCount] = useState(upVotes);
+        const [downVotesCount, setDownVotesCount] = useState(downVotes);
       
         const handleUpvote = () => {
-          if (!user) return alert('You need to log in to vote!');
+          if (!user) return toast.error('You need to log in to vote!');
           setUpVotesCount(upVotes + 1);
         };
       
     
         const handleDownvote = () => {
-          if (!user) return alert('You need to log in to vote!');
-          setUpVotesCount(upVotes - 1);
+          if (!user) return toast.error('You need to log in to vote!');
+          setDownVotesCount(downVotes + 1);
         };
       
 
@@ -48,7 +49,7 @@ const PostCard = ({post}) => {
         });
       };
   return (
-    <div className="w-full h-56">
+    <div className="w-full">
       <div className="flex border border-gray-300 rounded-lg shadow-lg bg-white overflow-hidden h-full">
         {/* Votes Section */}
         <div className="flex flex-col items-center justify-center bg-gray-100 p-3">
@@ -110,11 +111,25 @@ const PostCard = ({post}) => {
             ))}
           </div>
           {/* Comments & UpVotes */}
-          <div className="flex items-center justify-between text-sm text-gray-500">
-            <span>💬 {comments} Comments</span>
-            <span>⬆️ {upVotes} Votes</span>
-            <span>⬆️ {downVotes} Down Votes</span>
-          </div>
+          <div className="flex items-center justify-between text-sm text-gray-500 bg-gray-100 p-4 rounded-lg shadow-md hover:bg-gray-200 transition-all">
+  <span className="font-semibold text-gray-700 flex items-center space-x-2">
+    <span>⬆️</span>
+    <span className="text-green-600">{upVotes}</span>
+    <span>Votes</span>
+  </span>
+  <span className="flex items-center space-x-2 text-gray-600">
+    <span>⬇️</span>
+    <span className="text-red-600">{downVotes}</span>
+    <span>Down Votes</span>
+  </span>
+  <span className="flex items-center space-x-2 text-blue-600">
+    <span>💬</span>
+    <span>{comments}</span>
+    <span>Comments</span>
+  </span>
+</div>
+
+
         </div>
       </div>
     </div>
