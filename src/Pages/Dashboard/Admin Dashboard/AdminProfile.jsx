@@ -115,23 +115,11 @@ const handleAddTag = (e) => {
               placeholder="Enter a tag"
               className="input input-bordered w-full"
             />
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-success text-white">
               Add
             </button>
           </div>
         </form>
-
-        {/* Tags Dropdown */}
-        {/* <div className="mt-4">
-          <label className="block font-medium">Tags</label>
-          <select className="select select-bordered w-full mt-2">
-            {tags.length > 0 ? (
-              tags.map((tag, index) => <option key={index}>{tag}</option>)
-            ) : (
-              <option>No tags added yet</option>
-            )}
-          </select>
-        </div> */}
       </div>
     </div>
   );

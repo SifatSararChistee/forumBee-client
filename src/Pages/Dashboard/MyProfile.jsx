@@ -89,7 +89,7 @@ const MyProfile = () => {
                     <button type="button" onClick={() => setFormVisible(false)} className="btn btn-secondary btn-sm">
                       Cancel
                     </button>
-                    <button onClick={handleSave} type="submit" className="btn btn-primary btn-sm">
+                    <button onClick={handleSave} type="submit" className="btn btn-success text-white btn-sm">
                       Save
                     </button>
                   </div>

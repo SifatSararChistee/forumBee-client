@@ -49,7 +49,7 @@ const Membership = () => {
             <button
               onClick={handlePayment}
               disabled={isLoading}
-              className={`btn btn-primary w-full ${isLoading ? "btn-disabled" : ""}`}
+              className={`btn btn-success text-white w-full ${isLoading ? "btn-disabled" : ""}`}
             >
               {isLoading ? "Processing..." : `Pay $${paymentAmount} to Upgrade`}
             </button>

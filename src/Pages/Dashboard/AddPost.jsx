@@ -182,7 +182,7 @@ const AddPost = () => {
           isMulti  // Allow multiple selections
         />
       </div>
-            <button type="submit" className="btn btn-primary w-full">
+            <button type="submit" className="btn btn-success text-white w-full">
               Add Post
             </button>
           </form>
@@ -196,7 +196,7 @@ const AddPost = () => {
             </p>
             <button
               onClick={() => navigate("/membership")}
-              className="btn btn-accent"
+              className="btn btn-success text-white"
             >
               Become a Member
             </button>
