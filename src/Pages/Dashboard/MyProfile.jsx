@@ -3,12 +3,16 @@ import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
 import useSingleUser from '../../Hooks/useSingleUser';
+import { FaEdit } from "react-icons/fa";
 
 const MyProfile = () => {
   const { user } = useAuth(); // Get the authenticated user
   const [posts, setPosts] = useState([]); // Initialize posts state
   const axiosPublic = useAxiosPublic();
   const [userData, userLoading, userError, userErrorMsg] = useSingleUser()
+  const [formVisible, setFormVisible]=useState(false)
+  const [aboutMe, setAboutMe] = useState("");
+  const [tempAboutMe, setTempAboutMe] = useState(aboutMe);
 
   // Fetch user posts data
   const { data: postsData, isLoading: postsLoading, isError: postsError, error: postsErrorMsg } = useQuery({
@@ -36,6 +40,15 @@ const MyProfile = () => {
   if (userError || postsError) {
     return <div>Error: {userErrorMsg || postsErrorMsg}</div>;
   }
+
+  const handleEditBtn=()=>{
+    setFormVisible(true)
+  }
+  const handleSave = (e) => {
+    e.preventDefault();
+    setAboutMe(tempAboutMe);
+    setFormVisible(false);
+  };
   return (
     <div className="p-6 max-w-4xl mx-auto">
       {/* Profile Card */}
@@ -53,9 +66,37 @@ const MyProfile = () => {
             userData.badge === "Gold" ? "badge-warning text-black font-bold text-lg p-4" : "bg-amber-950 text-white font-bold text-lg p-4"
           }`}
           >{userData.badge}</p>
+          {
+            aboutMe === "" ? "":<div>
+            <p className='text-sm'>{tempAboutMe}</p>
+          </div>  
+          }
+          <button className='btn my-3 text-base btn-success text-white' onClick={handleEditBtn}>Edit <FaEdit /></button>
         </div>
       </div>
-
+          {
+            formVisible ?  <div className='my-6'>
+              <h2 className="text-xl font-semibold mb-4">About Me</h2>
+            <form >
+                  <textarea
+                    value={tempAboutMe}
+                    onChange={(e) => setTempAboutMe(e.target.value)}
+                    className="textarea textarea-bordered w-full mb-4"
+                    rows="5"
+                    placeholder='Give Information About Yourself'
+                  />
+                  <div className="flex justify-end space-x-4">
+                    <button type="button" onClick={() => setFormVisible(false)} className="btn btn-secondary btn-sm">
+                      Cancel
+                    </button>
+                    <button onClick={handleSave} type="submit" className="btn btn-primary btn-sm">
+                      Save
+                    </button>
+                  </div>
+                </form>
+            </div>
+      : ""
+          }
       {/* Recent Posts */}
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-4">Recent Posts</h3>

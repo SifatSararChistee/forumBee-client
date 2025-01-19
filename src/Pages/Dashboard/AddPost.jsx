@@ -105,7 +105,7 @@ const AddPost = () => {
               disabled
                 type="text"
                 name="authorImage"
-                value={formData.authorImage}
+                value={formData.authorImg}
                 onChange={handleInputChange}
                 className="input input-bordered w-full"
                 placeholder="Enter image URL"

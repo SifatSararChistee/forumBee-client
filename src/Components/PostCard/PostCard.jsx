@@ -4,7 +4,6 @@ import useAuth from "../../Hooks/useAuth";
 
 const PostCard = ({post}) => {
     const {_id,authorName, authorImg, postTitle, tags, time, comments, upVotes, downVotes}=post
-    // console.log(authorImg)
     const {user}= useAuth()
         const [upVotesCount, setUpVotesCount] = useState(upVotes);
         // const [downVotesCount, setDownVotesCount] = useState(upVotes);
@@ -65,7 +64,7 @@ const PostCard = ({post}) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7"></path>
             </svg>
           </button>
-          <span className="font-medium text-gray-700 my-1">{upVotesCount}</span>
+          <span className="font-medium text-gray-700 my-1">{upVotes}</span>
           <button onClick={handleDownvote} className="text-gray-500 hover:text-blue-500">
             <svg
               className="w-6 h-6"
