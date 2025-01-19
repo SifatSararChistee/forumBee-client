@@ -63,7 +63,9 @@ const Banner = () => {
                                                 onChange={(e) => setSearch(e.target.value)}
                                                 className="grow"/>
                             </label>
-                            <button onClick={handleSearch} className='btn btn-success text-white rounded-l-none'>
+                            <button 
+                            onClick={handleSearch} className={`btn ${search ? 'btn-success' : 'btn-disabled'} text-white rounded-l-none`}
+                            disabled={!search}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 16 16"
