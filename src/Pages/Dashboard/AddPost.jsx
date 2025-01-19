@@ -10,21 +10,21 @@ const AddPost = () => {
   const axiosPublic=useAxiosPublic()
   const {user} = useAuth()
   const [userData] =useSingleUser()
-  console.log(userData?.badge)
+  // console.log(userData?.badge)
   const [tags, setTags]=useState([])
   const date = new Date();
   const formattedDate = date.toISOString().split('T')[0];
   const [formVisible, setFormVisible] = useState(true);
     const [formData, setFormData] = useState({
     authorName: user?.displayName,
-    authorImage: user?.photoURL,
+    authorImg: user?.photoURL,
     postTitle: "",
     tags: [],
     time:formattedDate,
     comments:0,
     authorEmail: user?.email,
-    upVote: 0,
-    downVote: 0,
+    upVotes: 0,
+    downVotes: 0,
     description: "",
   });
   const navigate = useNavigate();
@@ -34,9 +34,9 @@ const AddPost = () => {
     axiosPublic
     .get(`/user-posts/${user?.email}`)
     .then((response) => {
-      if (response.data.length >= 5 && userData.badge === "Bronze") {
+      if (response.data.length >= 5 && userData?.badge === "Bronze") {
         setFormVisible(false);
-      } else if (userData.badge === "Gold") {
+      } else if (userData?.badge === "Gold") {
         setFormVisible(true);
       }
     })

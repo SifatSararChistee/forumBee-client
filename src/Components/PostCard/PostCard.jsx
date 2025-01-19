@@ -85,6 +85,7 @@ const PostCard = ({post}) => {
           {/* Author Info */}
           <div className="flex items-center mb-2">
             <img
+              referrerPolicy="no-referrer"
               className="w-10 h-10 rounded-full"
               src={authorImg}
               alt="Author"
