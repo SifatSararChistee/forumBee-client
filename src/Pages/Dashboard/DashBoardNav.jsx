@@ -7,14 +7,14 @@ const DashBoardNav = () => {
     const [isAdmin] =useAdmin()
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <header className="bg-gray-800 text-white p-4 shadow-md">
+        <div className="flex flex-col min-h-screen rounded-lg">
+            <header className="bg-green-700 text-white p-4 shadow-md">
                 <h1 className="text-2xl font-semibold text-center">
                     {isAdmin ? "Admin Dashboard" : "User Dashboard"}
                 </h1>
             </header>
 
-            <nav className="bg-gray-100 p-4 space-y-4 flex-1">
+            <nav className="bg-green-200 min-h-screen p-4 space-y-4 flex-1">
                 <div className="space-y-4">
                     {!isAdmin ? (
                         <>

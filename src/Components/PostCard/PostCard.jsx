@@ -115,12 +115,10 @@ const PostCard = ({post}) => {
   <span className="font-semibold text-gray-700 flex items-center space-x-2">
     <span>⬆️</span>
     <span className="text-green-600">{upVotes}</span>
-    <span>Votes</span>
   </span>
   <span className="flex items-center space-x-2 text-gray-600">
     <span>⬇️</span>
     <span className="text-red-600">{downVotes}</span>
-    <span>Down Votes</span>
   </span>
   <span className="flex items-center space-x-2 text-blue-600">
     <span>💬</span>

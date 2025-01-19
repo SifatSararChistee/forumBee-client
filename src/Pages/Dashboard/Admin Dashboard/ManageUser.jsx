@@ -110,12 +110,15 @@ const ManageUser = () => {
           </tbody>
         </table>
       )}
-              <div className="join my-5">
-          {
+              <div className="flex items-center justify-between">
+                <p className="text-base font-medium">Showing 1-10 of {allUsers.length} Users</p>
+                <div className="join my-5">
+                {
             pages.map(page =><button key={page} 
               className={`btn join-item ${currentPage === page ? 'btn-active' : ''}`}
               onClick={()=> setCurrentPage(page)}>{page}</button>)
           }
+                </div>
         </div>
     </div>
   );
