@@ -5,9 +5,11 @@ import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useSingleUser from '../../Hooks/useSingleUser'
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AddPost = () => {
   const axiosPublic=useAxiosPublic()
+  const axiosSecure=useAxiosSecure()
   const {user} = useAuth()
   const [userData] =useSingleUser()
   // console.log(userData?.badge)
@@ -31,7 +33,7 @@ const AddPost = () => {
 
   useEffect(() => {
     // Fetch post count from API
-    axiosPublic
+    axiosSecure
     .get(`/user-posts/${user?.email}`)
     .then((response) => {
       if (response.data.length >= 5 && userData?.badge === "Bronze") {
@@ -76,7 +78,7 @@ const AddPost = () => {
     e.preventDefault();
     // Post data to API
     // console.log(formData)
-    axiosPublic
+    axiosSecure
       .post("/add-post", formData)
       .then((response) => {
         if(response.data.insertedId){

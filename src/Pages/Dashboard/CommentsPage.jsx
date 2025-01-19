@@ -5,11 +5,13 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import Modal from 'react-modal';
 import './modal.css'
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 Modal.setAppElement('#root');
 
 const CommentsPage = () => {
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { postId } = useParams();
   const [feedbackMap, setFeedbackMap] = useState({});
   const [reportedMap, setReportedMap] = useState({});
@@ -67,7 +69,7 @@ const CommentsPage = () => {
     }));
   
     // Send the latest report to the server
-    axiosPublic
+    axiosSecure
       .post(`/report/${_id}`, latestReport) // Send the report object to the server
       .then((response) => {
         if (response.data.insertedId) {

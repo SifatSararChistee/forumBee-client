@@ -4,11 +4,12 @@ import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
 import useSingleUser from '../../Hooks/useSingleUser';
 import { FaEdit } from "react-icons/fa";
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const MyProfile = () => {
   const { user } = useAuth(); // Get the authenticated user
   const [posts, setPosts] = useState([]); // Initialize posts state
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const [userData, userLoading, userError, userErrorMsg] = useSingleUser()
   const [formVisible, setFormVisible]=useState(false)
   const [aboutMe, setAboutMe] = useState("");
@@ -18,7 +19,7 @@ const MyProfile = () => {
   const { data: postsData, isLoading: postsLoading, isError: postsError, error: postsErrorMsg } = useQuery({
     queryKey: ["userPosts", user?.email],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/user-posts/${user?.email}`);
+      const res = await axiosSecure.get(`/user-posts/${user?.email}`);
       // console.log(res.data);
       return res.data;
     },

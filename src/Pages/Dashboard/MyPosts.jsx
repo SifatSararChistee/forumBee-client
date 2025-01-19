@@ -4,21 +4,22 @@ import useAuth from "../../Hooks/useAuth";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const MyPosts = () => {
-    const axiosPublic=useAxiosPublic()
+    const axiosSecure=useAxiosSecure()
     const {user} =useAuth()
     const { data: posts=[], refetch, isLoading, isError, error } = useQuery({
       queryKey: ["userPosts"],
       queryFn: async () => {
-        const res = await axiosPublic.get(`/user-posts/${user?.email}`);
+        const res = await axiosSecure.get(`/user-posts/${user?.email}`);
         return res.data;
       },
     });
 
   const handleDelete = (id) => {
     // console.log(id)
-    axiosPublic
+    axiosSecure
         .delete(`/user-posts/${id}`) 
         .then((res) => {
           if(res.data.deletedCount){

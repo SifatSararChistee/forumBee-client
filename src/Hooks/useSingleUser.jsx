@@ -3,7 +3,7 @@ import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
 
 
-const useAdmin = () => {
+const useSingleUser = () => {
     const { user} = useAuth();
     const axiosSecure = useAxiosSecure();
   const { data: userData, isLoading: userLoading, isError: userError, error: userErrorMsg } = useQuery({
@@ -18,4 +18,4 @@ const useAdmin = () => {
   return [userData, userLoading, userError, userErrorMsg];
 };
 
-export default useAdmin;
+export default useSingleUser;
