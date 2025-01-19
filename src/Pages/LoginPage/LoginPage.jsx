@@ -46,7 +46,7 @@ const LoginPage = () => {
         axiosPublic.post('/users', userInfo)
         .then(res =>{
           if (res.data.insertedId) {
-            console.log('user added to the database')
+            // console.log('user added to the database')
           }
           toast.success("Login Successful")
           navigate(location?.state ? location.state: "/")

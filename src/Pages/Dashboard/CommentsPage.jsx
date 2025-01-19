@@ -24,7 +24,7 @@ const CommentsPage = () => {
       return res.data;
     },
     onSuccess: (data) => {
-      console.log("Data fetched:", data); // Logs the fetched comments
+      // console.log("Data fetched:", data); 
     },
     onError: (err) => {
       console.error("Error fetching comments:", err);

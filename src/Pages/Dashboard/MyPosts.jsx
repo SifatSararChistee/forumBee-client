@@ -17,7 +17,7 @@ const MyPosts = () => {
     });
 
   const handleDelete = (id) => {
-    console.log(id)
+    // console.log(id)
     axiosPublic
         .delete(`/user-posts/${id}`) 
         .then((res) => {

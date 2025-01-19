@@ -75,7 +75,7 @@ const AddPost = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Post data to API
-    console.log(formData)
+    // console.log(formData)
     axiosPublic
       .post("/add-post", formData)
       .then((response) => {

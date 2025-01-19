@@ -16,7 +16,7 @@ const AdminProfile = () => {
   const axiosSecure=useAxiosSecure()
   const [newTag, setNewTag] = useState("");
   const [tags]=useTags()
-  console.log(tags)
+  // console.log(tags)
   const {user} = useAuth()
   const [postData] =usePosts()
   const [users] =useUsers()
@@ -57,7 +57,7 @@ const handleAddTag = (e) => {
   axiosSecure
     .post(`/add-tag/${id}`, { tag: newTag.trim() }) 
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.modifiedCount) {
         toast.success("Tag added successfully");
         setNewTag(""); 
