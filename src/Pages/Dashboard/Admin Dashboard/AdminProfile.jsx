@@ -3,7 +3,7 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale } from "chart.js";
 import useAuth from "../../../Hooks/useAuth"
 import usePosts from "../../../Hooks/usePosts";
-import useUsers from "../../../Hooks/useUsers";
+import useAllUsers from "../../../Hooks/useAllUsers";
 import useComments from "../../../Hooks/useComments";
 import useTags from "../../../Hooks/useTags";
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ const AdminProfile = () => {
   // console.log(tags)
   const {user} = useAuth()
   const [postData] =usePosts()
-  const [users] =useUsers()
+  const [allUsers] =useAllUsers()
   const [comments] =useComments()
   const adminProfile = {
     name: user.displayName,
@@ -27,7 +27,7 @@ const AdminProfile = () => {
     image: user.photoURL,
     posts: postData.length,
     comments:comments.length,
-    users: users.length,
+    users: allUsers.length,
   };
 
   // Pie chart data
@@ -44,7 +44,7 @@ const AdminProfile = () => {
   };
 
   const id='678793f88cb187b99f0ab1c7'
-  console.log(id)
+  // console.log(id)
 
 // Handle adding new tags
 const handleAddTag = (e) => {

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import useUsers from "../../../Hooks/useUsers";
+import useAllUsers from "../../../Hooks/useAllUsers";
 
 function debounce(func, delay) {
   let timeout;
@@ -15,6 +16,12 @@ const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const UsersPerPage = 10;
+  const [allUsers] =useAllUsers()
+
+  const [users, refetch, isLoading, isError, error] = useUsers(debouncedSearch, currentPage, UsersPerPage);
+  const pages = [...Array(Math.ceil(allUsers.length / UsersPerPage)).keys()];  
 
   // Debounced handler for search input
   const debouncedSetSearch = debounce((value) => {
@@ -27,21 +34,6 @@ const ManageUser = () => {
     debouncedSetSearch(e.target.value); 
   };
 
-  // Fetch user data based on debounced search input
-  const { data: users = [], isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["users", debouncedSearch],
-    queryFn: async () => {
-      if (debouncedSearch === "") {
-        // Fetch all users if no search query
-        const res = await axiosSecure.get("/users");
-        return res.data;
-      }
-      // Fetch users based on search query
-      const res = await axiosSecure.get(`/users?search=${debouncedSearch}`);
-      return res.data;
-    },
-    enabled: true, // Always enabled to ensure it fetches data
-  });
 
   // Handle "Make Admin" action
   const handleMakeAdmin = async (_id) => {
@@ -118,6 +110,13 @@ const ManageUser = () => {
           </tbody>
         </table>
       )}
+              <div className="join my-5">
+          {
+            pages.map(page =><button key={page} 
+              className={`btn join-item ${currentPage === page ? 'btn-active' : ''}`}
+              onClick={()=> setCurrentPage(page)}>{page}</button>)
+          }
+        </div>
     </div>
   );
 };
