@@ -13,7 +13,7 @@ const HomePage = () => {
             </section>
             {
                 announcements.length > 0 &&
-                <section>
+                <section className='my-4'>
                     <Announcements></Announcements>
                 </section>
             }

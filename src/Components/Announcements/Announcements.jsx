@@ -19,7 +19,7 @@ const Announcements = () => {
               referrerPolicy="no-referrer"
             />
             <div>
-              <p className="text-blue-800 font-bold">{item.title}</p>
+              <p className="text-green-800 font-bold">{item.title}</p>
               <p className="text-gray-600 text-sm">{item.description}</p>
             </div>
           </div>

@@ -52,7 +52,7 @@ const Banner = () => {
       
     return (
         <div className='h-1/3 space-y-10 p-5 max-w-screen-2xl mx-auto'>
-            <h1 className='text-7xl text-center'>Welcome to Forumbee</h1>
+            <h1 className='text-7xl text-center font-bold'>Welcome to Forumbee</h1>
             <div className='flex items-center justify-center my-10'>
             <label className="input input-bordered rounded-r-none flex items-center w-1/2">
                             <input 
