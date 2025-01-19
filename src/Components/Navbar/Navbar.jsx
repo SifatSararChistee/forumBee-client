@@ -4,18 +4,22 @@ import useAuth from '../../Hooks/useAuth';
 import { FiPlus } from 'react-icons/fi';
 import useAnnouncement from '../../Hooks/useAnnouncement';
 import useAdmin from '../../Hooks/useAdmin';
+import useSingleUser from '../../Hooks/useSingleUser';
 
 const Navbar = () => {
   const {user, logOut, setUser, loading}=useAuth()
   const [announcements]=useAnnouncement()
   const [isAdmin]=useAdmin()
+  const [userData] =useSingleUser()
   const handleLogOut = () => {
     logOut();
     setUser(null);
   };
     const links=<>
     <li className='mr-3'><NavLink to={'/'}>Home</NavLink></li>
-    <li className='mr-3'><NavLink to={'/membership'}>Membership</NavLink></li>
+    {
+      userData?.badge === "Bronze" ? <li className='mr-3'><NavLink to={'/membership'}>Membership</NavLink></li>: ""
+    }
     {
       loading ? '':<>
           {
