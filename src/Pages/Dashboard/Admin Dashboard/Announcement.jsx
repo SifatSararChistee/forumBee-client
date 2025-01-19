@@ -25,7 +25,7 @@ const Announcement = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Announcement Submitted:", announcement);
+    // console.log("Announcement Submitted:", announcement);
     axiosSecure
     .post("/announcements",  announcement)
     .then((response) => {

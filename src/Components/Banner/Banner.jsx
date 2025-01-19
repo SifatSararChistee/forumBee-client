@@ -41,7 +41,7 @@ const Banner = () => {
           if (!data || data.length === 0) {
             toast.error("No results found for your search.");
           } else {
-            console.log("Search Results:", data);
+            // console.log("Search Results:", data);
             setPosts(data) 
           }
         } catch (error) {
