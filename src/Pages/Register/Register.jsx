@@ -93,13 +93,14 @@ const Register = () => {
       }            
       axiosPublic.post('/users', userInfo)
       .then(res =>{
-        if (res.data.insertedId) {
-          toast.success("Account Registered Successfully")
-        }
+        setLoading(false)
+          navigate('/')
+          toast.success("Account Registered successful")
       })
-      navigate("/")
+      
     })
     .catch((err) => {
+      setLoading(false)
       toast.error(err.code)
     });
   }

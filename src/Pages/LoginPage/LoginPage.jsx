@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext, useState } from "react";
 import toast from 'react-hot-toast';
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 
@@ -24,7 +23,7 @@ const LoginPage = () => {
           setUser(user)
           // setLoading(false)
           toast.success("Login Successful")
-          navigate(location?.state ? location.state: "/")
+          navigate("/")
       })
       .catch((err) => {
         setLoading(false)
@@ -46,11 +45,15 @@ const LoginPage = () => {
         }           
         axiosPublic.post('/users', userInfo)
         .then(res =>{
-          if (res.data.insertedId) {
-            // console.log('user added to the database')
-          }
-          toast.success("Login Successful")
-          navigate(location?.state ? location.state: "/")
+          // console.log('user added to the database', res.data)
+          // if (res.data.insertedId) {
+          //   toast.success("User Created Successful")
+          setLoading(false)
+            navigate("/")
+          // }
+          toast.success("login successful")
+          
+          // navigate(location?.state ? location.state: "/")
         })
       })
       .catch((err) => {
