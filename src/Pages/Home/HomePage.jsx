@@ -3,6 +3,8 @@ import Banner from '../../Components/Banner/Banner';
 import AllPosts from '../../Components/AllPosts/AllPosts';
 import useAnnouncement from '../../Hooks/useAnnouncement';
 import Announcements from '../../Components/Announcements/Announcements';
+import FeaturedDiscussions from '../../Components/UniqueSections/FeaturedDiscussions';
+import CommunitySpotlight from '../../Components/UniqueSections/CommunitySpotlight';
 
 const HomePage = () => {
     const[announcements]=useAnnouncement()
@@ -17,8 +19,14 @@ const HomePage = () => {
                     <Announcements></Announcements>
                 </section>
             }
-            <section className='max-w-screen-2xl mx-auto w-11/12'>
+            <section className='bg-gray-100 mt-5 py-4'>
                 <AllPosts></AllPosts>
+            </section>
+            <section className='bg-green-200'>
+                <FeaturedDiscussions></FeaturedDiscussions>
+            </section>
+            <section className=''>
+                <CommunitySpotlight></CommunitySpotlight>
             </section>
         </div>
     );

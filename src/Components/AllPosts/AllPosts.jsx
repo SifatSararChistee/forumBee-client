@@ -36,7 +36,7 @@ const AllPosts = () => {
         }
       
     return (
-        <div>
+        <div className='max-w-screen-2xl mx-auto w-11/12'>
           <div className='text-right mb-4'>
                 <button onClick={handleSortBtn} className='btn btn-success text-white'>Sort By Popularity</button>
             </div>
