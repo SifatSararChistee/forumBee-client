@@ -5,6 +5,8 @@ import toast from 'react-hot-toast';
 import { getAuth } from 'firebase/auth';
 import useAuth from '../../Hooks/useAuth';
 import useAxiosPublic from '../../Hooks/useAxiosPublic'
+import Lottie from 'lottie-react';
+import registerAnimation from '../../assets/register.json'
 
 
 const Register = () => {
@@ -145,10 +147,10 @@ const Register = () => {
       <p>Already have an account?</p>
       <p className="mb-5 text-lg font-medium underline"><Link to={'/login'}> LogIn Here </Link></p>
         </div>
-{/* 
+
         <div className='max-h-fit hidden lg:block md:block'>
           <Lottie className='h-[400px]' animationData={registerAnimation}></Lottie>
-        </div> */}
+        </div>
 
         </div>
 
