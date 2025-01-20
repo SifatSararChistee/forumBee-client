@@ -1,22 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "./useAuth";
-import useAxiosSecure from "./useAxiosSecure";
-
+import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const useAdmin = () => {
     const { user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
+
     const { data: isAdmin, isPending: isAdminLoading } = useQuery({
-        queryKey: [user?.email, 'isAdmin'],
-        enabled: !loading,
+        queryKey: [user?.email, "isAdmin"],
+        enabled: !loading && !!user?.email,
         queryFn: async () => {
-            // console.log('asking or checking is admin', user)
-            const res = await axiosSecure.get(`/users/admin/${user.email}`);
-            // console.log(res.data);
+            // console.log("checking admin", user,user.email)
+            const res = await axiosSecure.get(`/users/admin/${user?.email}`);
             return res.data?.admin;
-        }
-    })
-    return [isAdmin, isAdminLoading]
+        },
+        staleTime: 60 * 1000, // Cache for 1 minute
+        onError: (err) => {
+            console.error("Error fetching admin status:", err);
+        },
+    });
+
+    return [isAdmin, isAdminLoading];
 };
 
 export default useAdmin;

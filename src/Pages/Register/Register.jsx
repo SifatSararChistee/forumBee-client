@@ -42,7 +42,7 @@ const Register = () => {
         .then((userCredential) => {
           const user = userCredential.user;
             setUser(user)
-            setLoading(false)
+            // setLoading(false)
             updateUserProfile({
               displayName:name,
               photoURL:photo

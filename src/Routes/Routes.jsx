@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         },
         {
             path: "/comments/:postId",
-            element:<CommentsPage></CommentsPage>,
+            element:<><PrivateRoute><CommentsPage></CommentsPage></PrivateRoute></>,
         },
         {
             path: "/dashboard",

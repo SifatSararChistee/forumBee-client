@@ -22,7 +22,7 @@ const LoginPage = () => {
       .then((userCredential) => {
         const user = userCredential.user;
           setUser(user)
-          setLoading(false)
+          // setLoading(false)
           toast.success("Login Successful")
           navigate(location?.state ? location.state: "/")
       })
@@ -36,7 +36,7 @@ const LoginPage = () => {
       .then((userCredential) => {
         const user = userCredential.user;
           setUser(user)
-          setLoading(false)
+          // setLoading(false)
           const userInfo = {
             name: user.displayName,
             email: user.email,

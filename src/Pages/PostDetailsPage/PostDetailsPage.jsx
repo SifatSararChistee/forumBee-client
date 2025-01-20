@@ -3,6 +3,7 @@ import { FaRegThumbsDown, FaRegThumbsUp, FaShareAlt } from 'react-icons/fa';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import {FacebookShareCount, FacebookIcon, FacebookShareButton, TwitterShareButton, XIcon, WhatsappShareButton, WhatsappIcon} from "react-share";
 import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
@@ -17,6 +18,7 @@ const PostDetailsPage = () => {
     const [upVotesCount, setUpVotesCount] = useState(upVotes);
     const [downVotesCount, setDownVotesCount] = useState(downVotes);
     const axiosPublic =useAxiosPublic()
+    const axiosSecure =useAxiosSecure()
     // console.log(postId)
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,7 +55,7 @@ const PostDetailsPage = () => {
 
     // console.log(comment)
     try {
-      const response = await axiosPublic.post('/comments', comment);
+      const response = await axiosSecure.post('/comments', comment);
       // console.log(response.data)
       if(response.data.insertedId){
         toast.success('Comment submitted successfully!');
