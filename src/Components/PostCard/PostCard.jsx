@@ -49,7 +49,7 @@ const PostCard = ({post}) => {
         });
       };
   return (
-    <div className="w-full">
+    <div className="w-full hover:shadow-2xl transition-transform transform hover:scale-105">
       <div className="flex border border-gray-300 rounded-lg shadow-lg bg-white overflow-hidden h-full">
         {/* Votes Section */}
         <div className="flex flex-col items-center justify-center bg-gray-100 p-3">

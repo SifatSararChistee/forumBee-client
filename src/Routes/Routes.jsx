@@ -16,6 +16,8 @@ import Announcement from "../Pages/Dashboard/Admin Dashboard/Announcement";
 import ReportedComments from "../Pages/Dashboard/Admin Dashboard/ReportedComments";
 import PrivateRoute from "../Routes/PrivateRoute"
 import AdminRoute from "./AdminRoute";
+import LatestTopics from "../Components/LatestTopics/LatestTopics";
+import ContactUs from "../Components/ContactUs/ContactUS";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
         {
             path: "/",
             element: <HomePage></HomePage>,
+        },
+        {
+            path: "/latest",
+            element: <LatestTopics></LatestTopics>,
+        },
+        {
+            path: "/contact",
+            element: <ContactUs></ContactUs>,
         },
         {
             path: "/membership",

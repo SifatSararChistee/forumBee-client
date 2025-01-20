@@ -45,7 +45,7 @@ const AllPosts = () => {
                 posts.map((post, index)=><PostCard key={index} post={post}></PostCard>)
             }
         </div>
-        <div className="join my-5">
+        <div className="join my-5 flex justify-center">
           {
             pages.map(page =><button key={page} 
               className={`btn join-item ${currentPage === page ? 'btn-active' : ''}`}

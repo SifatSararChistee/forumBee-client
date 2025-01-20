@@ -79,7 +79,7 @@ const Banner = () => {
                             </button>
             </div>
             <div className='text-center'>
-            {tags?.map((tag,i)=><button onClick={() => handleSearchClick(tag)} className='btn my-3 mx-2' key={i} >#{tag}</button>)}
+            {tags?.map((tag,i)=><button onClick={() => handleSearchClick(tag)} className='btn my-3 mx-2 hover:shadow-2xl transition-transform transform hover:scale-110' key={i} >#{tag}</button>)}
             </div>
         </div>
     );
