@@ -4,6 +4,8 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext, useState } from "react";
 import toast from 'react-hot-toast';
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import loginAnimation from "../../assets/login.json";
+import Lottie from "lottie-react";
 
 
 const LoginPage = () => {
@@ -63,7 +65,7 @@ const LoginPage = () => {
     }
 
     return (
-<div>
+<div className="flex flex-col lg:flex-row items-center gap-5 lg:w-2/3 w-11/12 mx-auto my-10">
         <div className="flex flex-col justify-center items-center mt-4 w-[400px] mx-auto shadow-2xl rounded-xl">
         <h1 className="text-3xl font-bold mt-3">Log in to Your Account</h1>
         <form className="p-10 w-full" onSubmit={handleLogIn}>
@@ -95,7 +97,13 @@ const LoginPage = () => {
       <p>Don't have account?</p>
       <p className="mb-5 text-lg font-medium underline"><Link to={'/register'}> Register Here </Link></p>
         </div>
+
+        <div className="w-1/2">
+      <Lottie className="h-auto lg:block hidden md:block" animationData={loginAnimation}  />
       </div>
+      </div>
+
+      
     );
 };
 

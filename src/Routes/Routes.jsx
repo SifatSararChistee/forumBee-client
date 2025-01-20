@@ -18,12 +18,13 @@ import PrivateRoute from "../Routes/PrivateRoute"
 import AdminRoute from "./AdminRoute";
 import LatestTopics from "../Components/LatestTopics/LatestTopics";
 import ContactUs from "../Components/ContactUs/ContactUS";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
     {
       path: "/",
       element: <Root></Root>,
-      errorElement: <h1>this is error</h1>,
+      errorElement: <ErrorPage></ErrorPage>,
       children:[
         {
             path: "/",
