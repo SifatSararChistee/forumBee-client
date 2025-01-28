@@ -4,12 +4,12 @@ An interactive online platform where users can engage in meaningful discussions,
 
 ---
 
-<img src="https://i.ibb.co.com/BVTs9f9/homepage.png" alt="Project Screenshot" width="400"/>
-<img src="https://i.ibb.co.com/HDtFHty/admin-dashboard.png" alt="Project Screenshot" width="400"/>
-<img src="https://i.ibb.co.com/gZ2DZMW/manage-users.png" alt="Project Screenshot" width="400"/>
-<img src="https://i.ibb.co.com/3S3svbj/reported-comments.png" alt="Project Screenshot" width="400"/>
-<img src="https://i.ibb.co.com/t3jNqVX/userdashboard.png" alt="Project Screenshot" width="400"/>
-<img src="https://i.ibb.co.com/KLw4vt7/post-details-page.png" alt="Project Screenshot" width="400"/>
+<img src="https://i.ibb.co.com/BVTs9f9/homepage.png" alt="Project Screenshot" width="300" />
+<img src="https://i.ibb.co.com/HDtFHty/admin-dashboard.png" alt="Project Screenshot" width="300" />
+<img src="https://i.ibb.co.com/gZ2DZMW/manage-users.png" alt="Project Screenshot" width="300" />
+<img src="https://i.ibb.co.com/3S3svbj/reported-comments.png" alt="Project Screenshot" width="300" />
+<img src="https://i.ibb.co.com/t3jNqVX/userdashboard.png" alt="Project Screenshot" width="300" />
+<img src="https://i.ibb.co.com/KLw4vt7/post-details-page.png" alt="Project Screenshot" width="300" />
 
 ## Purpose
 
