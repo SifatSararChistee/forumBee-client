@@ -118,14 +118,18 @@ const PostCard = ({post}) => {
   </span>
   <span className="flex items-center space-x-2 text-gray-600">
     <span>⬇️</span>
-    <span className="text-red-600">{downVotes}</span>
+    <span className="">{downVotes}</span>
   </span>
-  <span className="flex items-center space-x-2 text-blue-600">
+  <span className="flex items-center space-x-2 ">
     <span>💬</span>
     <span>{comments}</span>
     <span>Comments</span>
   </span>
 </div>
+
+<div className="mt-4 flex justify-end">
+          <NavLink to={`/posts/${_id}`} className="btn-success btn text-white btn-sm" > See More</NavLink>
+            </div>
 
 
         </div>
