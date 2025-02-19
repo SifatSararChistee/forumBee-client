@@ -60,8 +60,8 @@ const MyProfile = () => {
               <img referrerPolicy='no-referrer' src={userData?.photoURL} alt={userData?.displayName} />
             </div>
           </div>
-          <h2 className="card-title text-2xl mt-4">{userData?.displayName}</h2>
-          <p className="text-sm text-gray-500">{userData?.email}</p>
+          <h2 className="text-2xl font-bold mt-4">{user?.displayName}</h2>
+          <p className="text-sm text-gray-500">{user?.email}</p>
           <p
           className={`badge ${
             userData.badge === "Gold" ? "badge-warning text-black font-bold text-lg p-4" : "bg-amber-950 text-white font-bold text-lg p-4"
@@ -87,7 +87,7 @@ const MyProfile = () => {
                     placeholder='Give Information About Yourself'
                   />
                   <div className="flex justify-end space-x-4">
-                    <button type="button" onClick={() => setFormVisible(false)} className="btn btn-secondary btn-sm">
+                    <button type="button" onClick={() => setFormVisible(false)} className="btn btn-sm">
                       Cancel
                     </button>
                     <button onClick={handleSave} type="submit" className="btn btn-success text-white btn-sm">

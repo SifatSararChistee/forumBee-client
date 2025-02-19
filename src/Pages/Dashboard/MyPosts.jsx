@@ -60,7 +60,7 @@ const MyPosts = () => {
                       </button>
                         </NavLink>
                       <button
-                        className="btn btn-sm btn-error"
+                        className="btn btn-sm btn-ghost"
                         onClick={() => handleDelete(post._id)}
                       >
                         Delete Post

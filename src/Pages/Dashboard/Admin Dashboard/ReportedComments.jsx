@@ -60,13 +60,13 @@ const handleDelete = (_id) => {
               <td className="space-y-2 text-center">
                 <button
                   onClick={() => handleDelete(report._id)}
-                  className="btn btn-error text-white w-[150px]"
+                  className="btn btn-success text-white w-[150px]"
                 >
                   Delete Comment
                 </button>
                 <button
                   onClick={() => handleApprove(report._id)}
-                  className="btn btn-warning  w-[150px]"
+                  className="btn btn-success text-white  w-[150px]"
                 >
                   Approve Comment
                 </button>

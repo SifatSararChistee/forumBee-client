@@ -98,6 +98,9 @@ ForumBee is a feature-rich platform designed to encourage community discussions 
 1. Node.js and npm installed.
 2. MongoDB database setup.
 
+Admin email: sifu@gmail.com
+Admin password: Aa123456
+
 ### Steps:
 
 1. Clone the repository:
