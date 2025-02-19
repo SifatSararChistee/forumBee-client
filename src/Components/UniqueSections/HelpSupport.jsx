@@ -17,7 +17,7 @@ export default function HelpSupport() {
   
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           {topics.map((topic, index) => (
-            <div key={index} className="p-6 border rounded-xl shadow hover:shadow-lg transition">
+            <div key={index} className="p-6 border rounded-xl shadow hover:shadow-2xl transition">
               <h3 className="text-lg font-semibold">{topic.title}</h3>
               <p className="text-gray-600 mt-2">{topic.description}</p>
             </div>

@@ -29,13 +29,13 @@ const HomePage = () => {
                 <FeaturedDiscussions></FeaturedDiscussions>
             </section>
             <section className=''>
-                <JobInternshipBoard></JobInternshipBoard>
-            </section>
-            <section className=''>
                 <ProjectsShowcase></ProjectsShowcase>
             </section>
             <section className='bg-green-200'>
                 <CommunitySpotlight></CommunitySpotlight>
+            </section>
+            <section className=''>
+                <JobInternshipBoard></JobInternshipBoard>
             </section>
             <section className=''>
                 <HelpSupport></HelpSupport>
