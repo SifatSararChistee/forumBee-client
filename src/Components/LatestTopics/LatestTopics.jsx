@@ -88,7 +88,6 @@ const LatestTopics = () => {
               <p className="text-sm text-gray-500">By {blog.author} • {blog.date}</p>
               <p className="mt-2 text-gray-700">{blog.summary}</p>
               <div className="card-actions justify-end mt-4">
-                <button className="btn btn-success text-white btn-sm">Read More</button>
               </div>
             </div>
           </div>

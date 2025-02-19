@@ -29,7 +29,6 @@ const FeaturedDiscussions = () => {
               </div>
               <div className="flex justify-between items-center mt-2">
                 <span className="text-sm text-gray-500">{discussion.views} Views</span>
-                <button className="btn btn-success text-white btn-sm">Join Discussion</button>
               </div>
             </div>
           </div>

@@ -5,6 +5,9 @@ import useAnnouncement from '../../Hooks/useAnnouncement';
 import Announcements from '../../Components/Announcements/Announcements';
 import FeaturedDiscussions from '../../Components/UniqueSections/FeaturedDiscussions';
 import CommunitySpotlight from '../../Components/UniqueSections/CommunitySpotlight';
+import HelpSupport from '../../Components/UniqueSections/HelpSupport';
+import JobInternshipBoard from '../../Components/UniqueSections/JobInternshipBoard';
+import ProjectsShowcase from '../../Components/UniqueSections/ProjectsShowcase';
 
 const HomePage = () => {
     const[announcements]=useAnnouncement()
@@ -26,7 +29,16 @@ const HomePage = () => {
                 <FeaturedDiscussions></FeaturedDiscussions>
             </section>
             <section className=''>
+                <JobInternshipBoard></JobInternshipBoard>
+            </section>
+            <section className=''>
+                <ProjectsShowcase></ProjectsShowcase>
+            </section>
+            <section className='bg-green-200'>
                 <CommunitySpotlight></CommunitySpotlight>
+            </section>
+            <section className=''>
+                <HelpSupport></HelpSupport>
             </section>
         </div>
     );

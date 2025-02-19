@@ -24,9 +24,6 @@ const CommunitySpotlight = () => {
             <h3 className="text-xl font-semibold">{member.name}</h3>
             <p className="text-sm mb-2">{member.role}</p>
             <p className="text-gray-600">Posts: {member.posts}</p>
-            <div className="mt-4 text-center">
-              <button className="btn btn-success text-white btn-sm">View Profile</button>
-            </div>
           </div>
         ))}
       </div>
