@@ -144,7 +144,7 @@ const PostDetailsPage = () => {
       disabled={!user}
         onClick={openModal}
         className={`px-4 py-2 text-white rounded-full
-          ${user ? "bg-blue-500 hover:bg-blue-600":"bg-gray-400 cursor-not-allowed"}
+          ${user ? "bg-green-600":"bg-gray-400 cursor-not-allowed"}
           `}
         >
           <FaShareAlt className="inline mr-2" />
