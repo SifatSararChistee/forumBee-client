@@ -1,12 +1,20 @@
 import React from 'react';
 import Lottie from "lottie-react";
 import error from "../../assets/Animation - 1735050973708.json";
+import { useNavigate } from 'react-router-dom';
+
 
 const ErrorPage = () => {
+    const navigate = useNavigate();
     return (
-        <div>
-            <h1 className='text-center text-3xl font-bold text-red-400'>404 NOT Found</h1>
-            <Lottie className='h-screen' animationData={error}  />
+        <div className='text-center'>
+            <Lottie className='h-[600px]' animationData={error}  />
+            <button  
+      onClick={() => navigate(-1)} 
+      className="px-4 py-2 bg-green-500 btn-lg text-white rounded-md hover:bg-slate-400"
+    >
+      Go Back
+    </button>
         </div>
     );
 };

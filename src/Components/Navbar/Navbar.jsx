@@ -20,6 +20,7 @@ const Navbar = () => {
     <li className='mr-3'><NavLink to={'/'}>Home</NavLink></li>
     <li className='mr-3'><NavLink to={'/latest'}>Latest Topics</NavLink></li>
     <li className='mr-3'><NavLink to={'/contact'}>Contact</NavLink></li>
+    <li className='mr-3'><NavLink to={'/about'}>About</NavLink></li>
     {
       userData?.badge === "Bronze" ? <li className='mr-3'><NavLink to={'/membership'}>Membership</NavLink></li>: ""
     }
