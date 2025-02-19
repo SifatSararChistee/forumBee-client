@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRoute";
 import LatestTopics from "../Components/LatestTopics/LatestTopics";
 import ContactUs from "../Components/ContactUs/ContactUS";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import About from "../Components/About/About";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         {
             path: "/contact",
             element: <ContactUs></ContactUs>,
+        },
+        {
+            path: "/about",
+            element: <About></About>,
         },
         {
             path: "/membership",
